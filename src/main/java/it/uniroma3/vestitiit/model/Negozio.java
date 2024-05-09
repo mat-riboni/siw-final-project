@@ -1,5 +1,6 @@
 package it.uniroma3.vestitiit.model;
 
+import java.util.List;
 import java.util.Objects;
 
 import jakarta.persistence.Column;
@@ -7,6 +8,8 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.OneToMany;
 
 @Entity
 public class Negozio {
@@ -22,6 +25,15 @@ public class Negozio {
 	
 	@Column(length = 2000)
 	private String descrizione;
+	
+	@OneToMany
+	@JoinColumn(name = "negozio_id")
+	private List<Categoria> categorie;
+	
+	@OneToMany
+	@JoinColumn(name = "negozio_id")
+	private List<Recensione> recensioni;
+	
 
 	@Override
 	public int hashCode() {
