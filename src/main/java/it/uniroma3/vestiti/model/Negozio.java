@@ -1,4 +1,4 @@
-package it.uniroma3.vestitiit.model;
+package it.uniroma3.vestiti.model;
 
 import java.util.List;
 import java.util.Objects;

@@ -1,4 +1,4 @@
-package it.uniroma3.vestitiit.model;
+package it.uniroma3.vestiti.model;
 
 import java.util.Objects;
 
@@ -7,8 +7,7 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.OneToMany;
+import jakarta.persistence.OneToOne;
 
 @Entity
 public class Recensione {
@@ -25,8 +24,7 @@ public class Recensione {
 	
 	private String titolo;
 	
-	@OneToMany
-	@JoinColumn(name = "recensione_id")
+	@OneToOne
 	private Utente autore;
 
 	public int getVoto() {
