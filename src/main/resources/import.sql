@@ -1,0 +1,7 @@
+insert into utente(id,nome,cognome,email) values(nextval('hibernate_sequence'), 'Mario','Mario', 'Mario@')
+insert into utente(id,nome,cognome,email) values(nextval('hibernate_sequence'), 'luigi','Mario', 'luigi@')
+insert into utente(id,nome,cognome,email) values(nextval('hibernate_sequence'), 'sandro','Mario', 'sandro@')
+insert into utente(id,nome,cognome,email) values(nextval('hibernate_sequence'), 'giuseppe','Mario', 'giusepper@')
+insert into utente(id,nome,cognome,email) values(nextval('hibernate_sequence'), 'antonio','antonio', 'antonio@')
+insert into utente(id,nome,cognome,email) values(nextval('hibernate_sequence'), 'gigi','gigi', 'gigi@')
+insert into utente(id,nome,cognome,email) values(nextval('hibernate_sequence'), 'maschio','maschio', 'maschio@')
