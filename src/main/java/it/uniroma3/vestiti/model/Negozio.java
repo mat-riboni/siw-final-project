@@ -18,13 +18,13 @@ public class Negozio {
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Long id;
 	
-	private String indirizzo;
-	
 	@Column(nullable = false, unique = true)
 	private String nome;
 	
 	@Column(length = 2000)
 	private String descrizione;
+	
+	private String indirizzo;
 	
 	@OneToMany
 	@JoinColumn(name = "negozio_id")
