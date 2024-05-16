@@ -37,22 +37,19 @@ public class AuthConfiguration {
 	
 	@Bean
 	public SecurityFilterChain configure(final HttpSecurity httpSecurity) throws Exception{
-		
-		httpSecurity
-		.csrf().and().cors().disable()
-		.authorizeHttpRequests()
-		.requestMatchers(HttpMethod.GET, "/", "/index","/CSS/**", "/images/**", "favicon.ico").permitAll()
-		.requestMatchers(HttpMethod.POST,"/register","/login").permitAll()
-		.anyRequest().authenticated()
-		.and().formLogin().loginPage("/login").permitAll()
-		.defaultSuccessUrl("/success", true)
-		.failureUrl("/login?error=true")
-		.and().logout().logoutUrl("/logout")
-		.invalidateHttpSession(true)
-		.deleteCookies("JSESSIONID")
-		.logoutRequestMatcher(new AntPathRequestMatcher("/logout"))
-		.clearAuthentication(true)
-		.permitAll();
+
+        httpSecurity
+                .authorizeHttpRequests(requests -> requests
+                        .requestMatchers(HttpMethod.GET, "/", "/register**", "/registrationSuccessful", "/CSS/**", "/images/**", "favicon.ico").permitAll()
+                        .requestMatchers(HttpMethod.POST, "/", "/register", "/login").permitAll()
+                        .anyRequest().authenticated()).formLogin(login -> login.loginPage("/login").permitAll()
+                .defaultSuccessUrl("/success", true)
+                .failureUrl("/login?error=true")).logout(logout -> logout.logoutUrl("/logout")
+                .invalidateHttpSession(true)
+                .deleteCookies("JSESSIONID")
+                .logoutRequestMatcher(new AntPathRequestMatcher("/logout"))
+                .clearAuthentication(true)
+                .permitAll());
 		return httpSecurity.build();
 	}
 	

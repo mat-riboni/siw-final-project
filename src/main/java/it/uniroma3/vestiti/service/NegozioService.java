@@ -9,5 +9,5 @@ import it.uniroma3.vestiti.repository.NegozioRepository;
 public class NegozioService {
 
 	@Autowired
-	NegozioRepository negozioRepository;
+	private NegozioRepository negozioRepository;
 }

@@ -9,7 +9,7 @@ import it.uniroma3.vestiti.repository.TagliaRepository;
 public class TagliaService {
 
 	@Autowired
-	TagliaRepository tagliarepository;
+	private TagliaRepository tagliarepository;
 	
 	
 }

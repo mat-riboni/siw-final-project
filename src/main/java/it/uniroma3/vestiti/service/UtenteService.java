@@ -5,11 +5,12 @@ import org.springframework.stereotype.Service;
 
 import it.uniroma3.vestiti.model.Utente;
 import it.uniroma3.vestiti.repository.UtenteRepository;
+import jakarta.transaction.Transactional;
 
 @Service
 public class UtenteService {
 
-	@Autowired
+	@Autowired 
 	UtenteRepository utenteRepository;
 	
 	public Utente getUtenteById(Long id) {
@@ -20,8 +21,9 @@ public class UtenteService {
 		return this.utenteRepository.getUtenteByEmail(email);
 	}
 	
+	@Transactional
 	public Utente saveUtente(Utente utente) {
-		return this.utenteRepository.save(utente);
+		return utenteRepository.save(utente);
 	}
 		
 }

@@ -9,6 +9,7 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
 
 @Entity
@@ -33,6 +34,12 @@ public class Negozio {
 	@OneToMany
 	@JoinColumn(name = "negozio_id")
 	private List<Recensione> recensioni;
+	
+	@ManyToOne
+	private Negoziante negoziante;
+	
+	@OneToMany(mappedBy = "negozio")
+	private List<Prenotazione> prenotazioni;
 	
 
 	@Override
