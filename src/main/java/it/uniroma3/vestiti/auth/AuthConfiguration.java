@@ -31,20 +31,25 @@ public class AuthConfiguration {
 	}
 	
 	@Bean
-	public PasswordEncoder passwordEncoder() {
+	PasswordEncoder passwordEncoder() {
 		return new BCryptPasswordEncoder();
 	}
 	
 	@Bean
-	public SecurityFilterChain configure(final HttpSecurity httpSecurity) throws Exception{
+	SecurityFilterChain configure(final HttpSecurity httpSecurity) throws Exception{
 
         httpSecurity
+        		.csrf(csfr ->csfr.disable())
                 .authorizeHttpRequests(requests -> requests
-                        .requestMatchers(HttpMethod.GET, "/", "/register**", "/registrationSuccessful", "/CSS/**", "/images/**", "favicon.ico").permitAll()
-                        .requestMatchers(HttpMethod.POST, "/", "/register", "/login").permitAll()
-                        .anyRequest().authenticated()).formLogin(login -> login.loginPage("/login").permitAll()
+                        .requestMatchers("/", "/register", "/registrationSuccessful", "/CSS/**", "/images/**", "favicon.ico").permitAll()
+                        .anyRequest().authenticated()
+                        )
+                .formLogin(login -> login
+                		.loginPage("/login").permitAll()
                 .defaultSuccessUrl("/success", true)
-                .failureUrl("/login?error=true")).logout(logout -> logout.logoutUrl("/logout")
+                .failureUrl("/login?error=true")
+                )
+                .logout(logout -> logout.logoutUrl("/logout")
                 .invalidateHttpSession(true)
                 .deleteCookies("JSESSIONID")
                 .logoutRequestMatcher(new AntPathRequestMatcher("/logout"))

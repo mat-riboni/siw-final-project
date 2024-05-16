@@ -10,10 +10,11 @@ import it.uniroma3.vestiti.repository.CredentialsRepository;
 @Service
 public class CredentialsService {
 	
+	@Autowired
 	private PasswordEncoder passwordEncoder;
 
 	@Autowired
-	CredentialsRepository credentialsRepository;
+	private CredentialsRepository credentialsRepository;
 	
 	public Credentials getCredentialsById(String id) {
 		return this.credentialsRepository.findById(id).get();	

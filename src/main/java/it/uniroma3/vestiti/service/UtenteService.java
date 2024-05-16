@@ -11,7 +11,7 @@ import jakarta.transaction.Transactional;
 public class UtenteService {
 
 	@Autowired 
-	UtenteRepository utenteRepository;
+	private UtenteRepository utenteRepository;
 	
 	public Utente getUtenteById(Long id) {
 		return this.utenteRepository.getUtenteById(id);
@@ -21,7 +21,6 @@ public class UtenteService {
 		return this.utenteRepository.getUtenteByEmail(email);
 	}
 	
-	@Transactional
 	public Utente saveUtente(Utente utente) {
 		return utenteRepository.save(utente);
 	}

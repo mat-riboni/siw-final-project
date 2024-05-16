@@ -14,7 +14,9 @@ import it.uniroma3.vestiti.service.CredentialsService;
 @Controller
 public class AuthController {
 	
-	@Autowired CredentialsService credentialsService;
+	
+	@Autowired 
+	private CredentialsService credentialsService;
 
 	@GetMapping("/login")
 	public String getLogin() {
@@ -25,13 +27,15 @@ public class AuthController {
 	public String getRegister(Model model) {
 		model.addAttribute("utente", new Utente());
 		model.addAttribute("credentials", new Credentials());
-		return "register.html";
+		return "registrationForm.html";
 	}
 	
 	@PostMapping("/register")
-	public String newUtente(@ModelAttribute("utente") Utente utente, @ModelAttribute("credentials") Credentials credentials) {
-		credentials.setUtente(utente);
-		this.credentialsService.saveCredentials(credentials);	
-		return "registrationSuccessful";
+	public String newUtente(@ModelAttribute("utente") Utente utente , @ModelAttribute("credentials") Credentials credentials) {
+	        	credentials.setRole("DEFAULT_ROLE");
+	            credentials.setUtente(utente);
+	            credentialsService.saveCredentials(credentials);
+	            return "redirect:/";
+	    
 	}
 }

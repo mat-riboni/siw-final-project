@@ -1,14 +1,36 @@
 package it.uniroma3.vestiti.model;
 
+import java.util.Objects;
+
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
 import jakarta.persistence.OneToOne;
 
 @Entity
 public class Credentials {
 	
+	@Override
+	public int hashCode() {
+		return Objects.hash(username);
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		Credentials other = (Credentials) obj;
+		return Objects.equals(username, other.username);
+	}
+
+	public static final String DEFAULT_ROLE = "DEFAULT";
+	public static final String ADMIN_ROLE = "ADMIN";
 	
 	@Id
 	@Column(unique = true)
@@ -21,6 +43,7 @@ public class Credentials {
 	private String role;
 	
 	@OneToOne(cascade = CascadeType.ALL)
+	@JoinColumn(name = "utente_id")
 	private Utente utente;
 
 	public String getUsername() {
@@ -54,6 +77,13 @@ public class Credentials {
 	public void setUtente(Utente user) {
 		this.utente = user;
 	}
+
+	@Override
+	public String toString() {
+		return "Credentials [username=" + username + ", role=" + role + "]";
+	}
+	
+	
 	
 	
 
