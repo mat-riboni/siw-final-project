@@ -5,7 +5,6 @@ import org.springframework.stereotype.Service;
 
 import it.uniroma3.vestiti.model.Utente;
 import it.uniroma3.vestiti.repository.UtenteRepository;
-import jakarta.transaction.Transactional;
 
 @Service
 public class UtenteService {

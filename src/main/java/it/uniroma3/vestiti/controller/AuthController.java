@@ -24,18 +24,38 @@ public class AuthController {
 	}
 	
 	@GetMapping("/register")
-	public String getRegister(Model model) {
+	public String getRegisterTemplate(Model model) {
 		model.addAttribute("utente", new Utente());
 		model.addAttribute("credentials", new Credentials());
 		return "registrationForm.html";
 	}
 	
 	@PostMapping("/register")
-	public String newUtente(@ModelAttribute("utente") Utente utente , @ModelAttribute("credentials") Credentials credentials) {
-	        	credentials.setRole("DEFAULT_ROLE");
+	public String registerUtente(
+			@ModelAttribute("utente") Utente utente, 
+			@ModelAttribute("credentials") Credentials credentials) {
+				utente.setNegoziPosseduti(null);
+	        	credentials.setRole(Credentials.DEFAULT_ROLE);
 	            credentials.setUtente(utente);
 	            credentialsService.saveCredentials(credentials);
 	            return "redirect:/";
-	    
+	}
+	
+	@GetMapping("/registerNegoziante")
+	public String getRegisterNegozioTemplate(Model model) {
+		model.addAttribute("negoziante", new Utente());
+		model.addAttribute("credentials", new Credentials());
+		return "registerNegozianteForm.html";
+	}
+	
+	@PostMapping("/registerNegoziante")
+	public String registerNegoziante(
+			@ModelAttribute("negoziante") Utente negoziante,
+			@ModelAttribute("credentials") Credentials credentials) {
+			credentials.setRole(Credentials.NEGOZIANTE_ROLE);
+			negoziante.setProdotti(null);
+			credentials.setUtente(negoziante);
+			credentialsService.saveCredentials(credentials);
+			return "redirect:/";
 	}
 }

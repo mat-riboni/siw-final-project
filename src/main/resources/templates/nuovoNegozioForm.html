@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width">
+  <title>Nuovo Negozio</title>
+  <!-- UIkit CSS -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/uikit@3.20.10/dist/css/uikit.min.css" />
+  <!-- CSS -->
+  <link rel="stylesheet" href="/CSS/nuovoNegozio.css" />
+</head>
+<body>
+  <h1>Registra Negozio)</h1>
+  
+  <p>Bisogna capire come poter aggiungere le categorie da inserire</p>
+    <div class='form-container'>
+      <form class="form" th:action="@{/nuovoNegozio}" th:object="negozio" method="post" >
+        <input class="uk-input" type="text" placeholder="Nome" th:field="*{nome}">
+		<input class="uk-input" type="text" placeholder="Indirizzo" th:field="*{indirizzo}">
+		<input class="uk-input" type="text" placeholder="Descizione" th:field="*{descrizione}">
+		<div th:each="num: ${numeroCategorie}" >
+			<input class="uk-input" type="text" id="descizione" placeholder="Categoria" th:field="${categoria.nome}">
+		</div>
+		<span class="uk-icon uk-margin-small-right" uk-icon="icon:plus">
+			<button class="uk-button uk-button-large" th:onclick="${numeroCategorie + 1}">Altra categoria</button>
+		</span>
+        <button class="uk-button uk-button-default" type="submit">Submit</button>
+      </form>
+    </div>
+  <script src="https://cdn.jsdelivr.net/npm/uikit@3.20.10/dist/js/uikit.min.js"></script>
+	<script src="https://cdn.jsdelivr.net/npm/uikit@3.20.10/dist/js/uikit-icons.min.js"></script>
+</body>
+</html>

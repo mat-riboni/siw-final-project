@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width">
+  <title>Registrati Come Negoziante</title>
+  <!-- UIkit CSS -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/uikit@3.20.10/dist/css/uikit.min.css" />
+  <!-- CSS -->
+  <link rel="stylesheet" href="/CSS/registerNegoziante.css" />
+</head>
+<body>
+  <h1>Registrati come negoziante :)</h1>
+    <div class='form-container'>
+      <form class="form" th:action="@{/registerNegoziante}" method="post">
+        <input class="uk-input" type="text" placeholder="Nome" th:field="${negoziante.nome}">
+		<input class="uk-input" type="text" placeholder="Cognome" th:field="${negoziante.cognome}">
+		<input class="uk-input" type="text" placeholder="Email" th:field="${negoziante.email}">
+		<input class="uk-input" type="text" placeholder="Username" th:field="${credentials.username}">
+		<input class="uk-input" type="text" placeholder="Password" th:field="${credentials.password}">
+        <button class="uk-button uk-button-default" type="submit">Submit</button>
+      </form>
+    </div>
+  <script src="https://cdn.jsdelivr.net/npm/uikit@3.20.10/dist/js/uikit.min.js"></script>
+	<script src="https://cdn.jsdelivr.net/npm/uikit@3.20.10/dist/js/uikit-icons.min.js"></script>
+</body>
+</html>

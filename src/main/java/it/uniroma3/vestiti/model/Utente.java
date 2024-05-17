@@ -23,10 +23,14 @@ public class Utente {
 	
 	private String email;
 	
+	@OneToMany(mappedBy = "negoziante")
+	List<Negozio> negoziPosseduti;
+	
 	@OneToMany
 	@JoinColumn(name = "utente_id")
 	private List<Prodotto> prodotti;
-
+	
+	
 	@Override
 	public int hashCode() {
 		return Objects.hash(email, id);
@@ -40,6 +44,14 @@ public class Utente {
 
 	public Long getId() {
 		return id;
+	}
+	
+	public void setNegoziPosseduti(List<Negozio> negoziPosseduti) {
+		this.negoziPosseduti = negoziPosseduti;
+	}
+	
+	public List<Negozio> getNegoiPosseduti(){
+		return this.negoziPosseduti;
 	}
 
 	public void setId(Long id) {

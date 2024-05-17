@@ -3,43 +3,27 @@ package it.uniroma3.vestiti.model;
 import java.util.Objects;
 
 import jakarta.persistence.CascadeType;
-import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.OneToOne;
 
 @Entity
 public class Credentials {
-	
-	@Override
-	public int hashCode() {
-		return Objects.hash(username);
-	}
-
-	@Override
-	public boolean equals(Object obj) {
-		if (this == obj)
-			return true;
-		if (obj == null)
-			return false;
-		if (getClass() != obj.getClass())
-			return false;
-		Credentials other = (Credentials) obj;
-		return Objects.equals(username, other.username);
-	}
 
 	public static final String DEFAULT_ROLE = "DEFAULT";
-	public static final String ADMIN_ROLE = "ADMIN";
+	public static final String NEGOZIANTE_ROLE = "NEGOZIANTE";
 	
 	@Id
-	@Column(unique = true)
+	@GeneratedValue(strategy = GenerationType.AUTO)
+	private Long id;
+	
 	private String username;
 	
-	@Column(nullable = false)
 	private String password;
 	
-	@Column(nullable = false)
 	private String role;
 	
 	@OneToOne(cascade = CascadeType.ALL)
@@ -81,6 +65,23 @@ public class Credentials {
 	@Override
 	public String toString() {
 		return "Credentials [username=" + username + ", role=" + role + "]";
+	}
+	
+	@Override
+	public int hashCode() {
+		return Objects.hash(username);
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		Credentials other = (Credentials) obj;
+		return Objects.equals(username, other.username);
 	}
 	
 	

@@ -36,7 +36,8 @@ public class Negozio {
 	private List<Recensione> recensioni;
 	
 	@ManyToOne
-	private Negoziante negoziante;
+	@JoinColumn(name = "negoziante_id")
+	private Utente negoziante;
 	
 	@OneToMany(mappedBy = "negozio")
 	private List<Prenotazione> prenotazioni;
