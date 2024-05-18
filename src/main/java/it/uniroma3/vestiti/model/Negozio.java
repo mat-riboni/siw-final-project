@@ -3,6 +3,7 @@ package it.uniroma3.vestiti.model;
 import java.util.List;
 import java.util.Objects;
 
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -27,7 +28,7 @@ public class Negozio {
 	
 	private String indirizzo;
 	
-	@OneToMany
+	@OneToMany(cascade = {CascadeType.PERSIST, CascadeType.REMOVE})
 	@JoinColumn(name = "negozio_id")
 	private List<Categoria> categorie;
 	
@@ -36,13 +37,20 @@ public class Negozio {
 	private List<Recensione> recensioni;
 	
 	@ManyToOne
-	@JoinColumn(name = "negoziante_id")
 	private Utente negoziante;
 	
 	@OneToMany(mappedBy = "negozio")
 	private List<Prenotazione> prenotazioni;
 	
 
+	public List<Categoria> getCategorie(){
+		return this.categorie;
+	}
+	
+	public void setCategorie(List<Categoria> categorie) {
+		this.categorie = categorie;
+	}
+	
 	@Override
 	public int hashCode() {
 		return Objects.hash(id, nome);
@@ -53,6 +61,7 @@ public class Negozio {
 		Negozio other = (Negozio) obj;
 		return Objects.equals(id, other.id) && Objects.equals(nome, other.nome);
 	}
+	
 
 	public Long getId() {
 		return id;

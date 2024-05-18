@@ -1,5 +1,7 @@
 package it.uniroma3.vestiti.controller;
 
+import java.util.ArrayList;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -21,12 +23,15 @@ public class NegozioController {
 		@GetMapping("/nuovoNegozio")
 		public String getNuovoNegozioForm(Model model) {
 			model.addAttribute("negozio", new Negozio());
+			model.addAttribute("listaCategorie", new ArrayList<String>());
 			return "nuovoNegozioForm.html";
 		}
 		
 		//il path e' da cambiare in 'negoziante/nuovoNegozio' e aggiornare anche authconfig
 		@PostMapping("/nuovoNegozio")
-		public String InserisciNuovoNegozio(@ModelAttribute("negozio") Negozio negozio) {
+		public String InserisciNuovoNegozio(
+				@ModelAttribute("negozio") Negozio negozio) {
+			this.negozioService.save(negozio);
 			return "redirect:/";
 		}
 }

@@ -16,7 +16,7 @@ public class CredentialsService {
 	@Autowired
 	private CredentialsRepository credentialsRepository;
 	
-	public Credentials getCredentialsById(String id) {
+	public Credentials getCredentialsById(Long id) {
 		return this.credentialsRepository.findById(id).get();	
 	}
 		

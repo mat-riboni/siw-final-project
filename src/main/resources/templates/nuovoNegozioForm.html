@@ -12,14 +12,13 @@
 <body>
   <h1>Registra Negozio</h1>
   
-  <p>Bisogna capire come poter aggiungere le categorie da inserire</p>
     <div class='form-container'>
       <form class="form" th:action="@{/nuovoNegozio}" th:object="${negozio}" method="post" >
         <input class="uk-input" type="text" placeholder="Nome negozio" th:field="*{nome}">
 		<input class="uk-input" type="text" placeholder="Indirizzo" th:field="*{indirizzo}">
 		<textarea class="uk-textarea" placeholder="Descrizione..." th:field="*{descrizione}"></textarea>
 		<div id="categorie-container"> 
-			<input class="uk-input nuova-categoria" type="text" placeholder="Categoria">
+			<input class="uk-input nuova-categoria" name="categorie[0].nome" type="text" placeholder="Categoria">
 		</div>
 		<button class="uk-button uk-button-default" type="button" onclick="appendNuovaCategoria()">
 			<span class="uk-icon uk-margin-right" uk-icon="icon:plus"></span>
@@ -35,7 +34,14 @@
   <script>
 	let count = 1;
 	function appendNuovaCategoria(){
-		document.getElementById('categorie-container').innerHTML += '<input class="uk-input nuova-categoria" type="text" placeholder="Categoria">'
+	    const container = document.getElementById('categorie-container');
+	    const input = document.createElement('input');
+	    input.className = 'uk-input nuova-categoria';
+	    input.setAttribute('name', 'categorie[' + count + '].nome');
+	    input.setAttribute('type', 'text');
+	    input.setAttribute('placeholder', 'Categoria');
+	    container.appendChild(input);
+	    count++;
 	}
   </script>
 </body>

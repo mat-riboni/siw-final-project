@@ -6,7 +6,7 @@ import org.springframework.data.repository.CrudRepository;
 
 import it.uniroma3.vestiti.model.Credentials;
 
-public interface CredentialsRepository extends CrudRepository<Credentials, String>{
+public interface CredentialsRepository extends CrudRepository<Credentials, Long>{
 	
 	public Optional<Credentials>findByUsername(String username);
 	
