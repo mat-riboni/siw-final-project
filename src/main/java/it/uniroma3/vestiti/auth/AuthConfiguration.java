@@ -23,12 +23,11 @@ public class AuthConfiguration {
 	private DataSource dataSource;
 	
 	@Autowired
-	public void configureGlobal(AuthenticationManagerBuilder auth) throws Exception{
+	public void configure(AuthenticationManagerBuilder auth) throws Exception{
 		auth.jdbcAuthentication()
 			.dataSource(dataSource)
 			.authoritiesByUsernameQuery("SELECT username, role from credentials WHERE username=?")
-			.usersByUsernameQuery("SELECT username, password, 1 as eneabled FROM credentials WHERE username=?");
-			
+			.usersByUsernameQuery("SELECT username, password, 1 as enabled FROM credentials WHERE username=?");
 	}
 	
 	@Bean
@@ -43,7 +42,8 @@ public class AuthConfiguration {
         		.csrf(csfr ->csfr.disable())
                 .authorizeHttpRequests(requests -> requests
                         .requestMatchers("/", "/register", "/registerNegoziante", "/nuovoNegozio","/CSS/**", "/images/**", "favicon.ico").permitAll()         
-                        .requestMatchers("/negoziante/**").hasAnyRole(Credentials.NEGOZIANTE_ROLE)
+                        .requestMatchers("/negoziante/**").hasRole(Credentials.NEGOZIANTE_ROLE)
+                        .requestMatchers("/user/**").hasRole(Credentials.DEFAULT_ROLE)
                         .anyRequest().authenticated()
                         )
                 .formLogin(login -> login
@@ -52,6 +52,7 @@ public class AuthConfiguration {
                 .failureUrl("/login?error=true")
                 )
                 .logout(logout -> logout.logoutUrl("/logout")
+                		.logoutSuccessUrl("/")
                 .invalidateHttpSession(true)
                 .deleteCookies("JSESSIONID")
                 .logoutRequestMatcher(new AntPathRequestMatcher("/logout"))

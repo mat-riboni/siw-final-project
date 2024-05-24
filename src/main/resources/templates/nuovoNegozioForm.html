@@ -16,6 +16,7 @@
       <form class="form" th:action="@{/nuovoNegozio}" th:object="${negozio}" method="post" >
         <input class="uk-input" type="text" placeholder="Nome negozio" th:field="*{nome}">
 		<input class="uk-input" type="text" placeholder="Indirizzo" th:field="*{indirizzo}">
+		<input class="uk-input" type="text" placeholder="Città" th:field="*{citta}">
 		<textarea class="uk-textarea" placeholder="Descrizione..." th:field="*{descrizione}"></textarea>
 		<div id="categorie-container"> 
 			<input class="uk-input nuova-categoria" name="categorie[0].nome" type="text" placeholder="Categoria">

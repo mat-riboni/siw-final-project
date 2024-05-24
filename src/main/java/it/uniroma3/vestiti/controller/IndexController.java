@@ -1,15 +1,15 @@
 package it.uniroma3.vestiti.controller;
-
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
+import it.uniroma3.vestiti.service.CredentialsService;
+import it.uniroma3.vestiti.service.NegozioService;
+
 
 
 @Controller
 public class IndexController {
 	
-	@GetMapping("/")
-	public String getIndex() {
-		return "index.html";
-	}
+	@Autowired
+	private CredentialsService credentialsService;
 	
 }

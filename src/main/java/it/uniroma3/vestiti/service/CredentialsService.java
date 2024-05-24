@@ -20,8 +20,8 @@ public class CredentialsService {
 		return this.credentialsRepository.findById(id).get();	
 	}
 		
-	public Credentials getCredentialsByUsername(String email) {
-		return this.credentialsRepository.findByUsername(email).get();
+	public Credentials getCredentialsByUsername(String username) {
+		return this.credentialsRepository.findByUsername(username).get();
 	}
 		
 	

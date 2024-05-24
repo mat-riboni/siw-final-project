@@ -28,6 +28,8 @@ public class Negozio {
 	
 	private String indirizzo;
 	
+	private String citta;
+	
 	@OneToMany(cascade = {CascadeType.PERSIST, CascadeType.REMOVE})
 	@JoinColumn(name = "negozio_id")
 	private List<Categoria> categorie;
@@ -45,6 +47,14 @@ public class Negozio {
 
 	public List<Categoria> getCategorie(){
 		return this.categorie;
+	}
+	
+	public void setCitta(String citta) {
+		this.citta = citta;
+	}
+	
+	public String getCitta() {
+		return this.citta;
 	}
 	
 	public void setCategorie(List<Categoria> categorie) {

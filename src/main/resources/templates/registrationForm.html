@@ -12,12 +12,12 @@
 <body>
   <h1>Register</h1>
     <div class='form-container'>
-      <form class="form" th:action="@{/register}" method="post">
-        <input class="uk-input" type="text" placeholder="Email" th:field ="${utente.email}">
-        <input class="uk-input" type="text" placeholder="Nome" th:field="${utente.nome}">
-        <input class="uk-input" type="text" placeholder="Cognome" th:field="${utente.cognome}">
-        <input class="uk-input" type="text" placeholder="Username" th:field="${credentials.username}" >
-		<input class="uk-input" type="password" placeholder="Password" th:field="${credentials.password}" >
+      <form class="form" th:action="@{/register}" method="post" enctype="multipart/form-data"/>
+        <input class="uk-input" type="text" placeholder="Email" th:field ="${utente.email}"/>
+        <input class="uk-input" type="text" placeholder="Nome" th:field="${utente.nome}"/>
+        <input class="uk-input" type="text" placeholder="Cognome" th:field="${utente.cognome}"/>
+        <input class="uk-input" type="text" placeholder="Username" th:field="${credentials.username}"/>
+		<input class="uk-input" type="password" placeholder="Password" th:field="${credentials.password}"/>
 		
         <button class="uk-button uk-button-default" type="submit">Submit</button>
       </form>
