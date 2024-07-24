@@ -25,4 +25,10 @@ public class NegozioService {
 		return this.negozioRepository.findTop7ByOrderByIdAsc();
 	}
 	
+	public List<Negozio> findByNome(String nome){
+		return this.negozioRepository.findByNome(nome);
+	}
+	
+	
+	
 }

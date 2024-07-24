@@ -31,7 +31,7 @@ public class Negozio {
 	private String citta;
 	
 	@OneToMany(cascade = {CascadeType.PERSIST, CascadeType.REMOVE})
-	@JoinColumn(name = "negozio_id")
+	@JoinColumn(name = "categoria_id")
 	private List<Categoria> categorie;
 	
 	@OneToMany

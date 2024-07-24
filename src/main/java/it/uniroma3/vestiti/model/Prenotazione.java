@@ -26,6 +26,17 @@ public class Prenotazione {
 	
 	@ManyToOne
 	private Negozio negozio;
+	
+	@ManyToOne
+	private Utente utente;
+
+	public Utente getUtente() {
+		return utente;
+	}
+
+	public void setUtente(Utente utente) {
+		this.utente = utente;
+	}
 
 	public Long getId() {
 		return id;

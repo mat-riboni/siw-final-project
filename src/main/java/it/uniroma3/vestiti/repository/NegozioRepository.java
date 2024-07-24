@@ -10,4 +10,6 @@ public interface NegozioRepository extends CrudRepository<Negozio, Long>{
 
 	public List<Negozio> findTop7ByOrderByIdAsc();
 	
+	public List<Negozio> findByNome(String nome);
+	
 }

@@ -1,0 +1,141 @@
+body {
+    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+    font-weight: 400;
+    background-color: rgb(250, 250, 250);
+    margin: 0;
+    padding: 0;
+    overflow-y: auto;
+}
+
+header {
+    background-color: rgb(250, 250, 250);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 13vh;
+}
+
+.center-header {
+    display: flex;
+    width: 50%;
+    height: 70%;
+    background-color: rgb(255, 255, 255);
+    align-items: center;
+    justify-content: space-around;
+    border-radius: 30px;
+    margin: 0 10%;
+    border: 1px solid rgb(219, 219, 219);
+}
+
+header * {
+    display: inline;
+}
+
+.btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 35px;
+}
+
+.me-2 {
+    width: 30vw;
+}
+
+.user {
+    display: flex;
+    align-items: center;
+}
+
+.benvenuto {
+    margin-right: 20px;
+}
+
+.background-container {
+    margin-top: 50px;
+    display: flex;
+    justify-content: center;
+    height: 45vh;
+}
+
+.background {
+    background-image: url(../images/background_shopping.jpg);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 85vw;
+    margin: 4;
+    background-size: cover;
+    background-position-y: 30%;
+}
+
+.background > h2 {
+    font-family: Montserrat;
+    font-size: 2rem;
+    color: rgb(255, 255, 255);
+    text-align: center;
+    background-color: rgba(0, 0, 0, 0.277);
+}
+
+.card-container::-webkit-scrollbar { 
+    display: none;  /* Safari and Chrome */
+}
+
+.card-container{
+    -ms-overflow-style: none;  /* Internet Explorer 10+ */
+    scrollbar-width: none;  /* Firefox */
+}
+
+.card-container {
+    margin-top: 20px;
+    display:flex;
+    flex-direction: row;
+    flex-wrap:nowrap;
+    margin-bottom: 20px;
+    overflow-x: scroll;
+    overflow-y: hidden;
+}
+
+.card{
+    flex: 0 0 auto;
+    width:300px;
+    margin: 0 20px 0 20px;
+    height: 350px;
+}
+
+.card-description{
+    height: 40%;
+    overflow-y: hidden;
+}
+
+.card-img-top{
+    max-height: 40%;
+    object-fit: cover;
+}
+
+.footer {
+    display: flex;
+    height: 60px;
+    margin-top: 50px;
+    background-color: rgb(99, 99, 99);
+}
+
+.cards-title{
+    margin-top:50px;
+    display: flex;
+    width:100%;
+    align-items: center;
+    justify-content: center;
+}
+
+.btn-container{
+	display: flex;
+	flex-direction: row;
+	justify-content: space-between;
+	align-items: center;
+	width: 10vw;
+}
+
+.btn-container > button{
+	margin: 0 3px;
+}
