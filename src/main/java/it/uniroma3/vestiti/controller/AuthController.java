@@ -10,6 +10,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import it.uniroma3.vestiti.model.Credentials;
 import it.uniroma3.vestiti.model.Utente;
@@ -36,31 +37,19 @@ public class AuthController {
 	@PostMapping("/register")
 	public String registerUtente(
 			@ModelAttribute("utente") Utente utente, 
-			@ModelAttribute("credentials") Credentials credentials) {
+			@ModelAttribute("credentials") Credentials credentials,
+			@RequestParam(value = "negoziante", required = false) String negoziante) {
 				utente.setNegoziPosseduti(null);
-	        	credentials.setRole(Credentials.DEFAULT_ROLE);
 	            credentials.setUtente(utente);
+	            if(negoziante == null) {
+	            	credentials.setRole(Credentials.DEFAULT_ROLE);
+	            } else {
+	            	credentials.setRole(Credentials.NEGOZIANTE_ROLE);
+	            }
 	            credentialsService.saveCredentials(credentials);
 	            return "redirect:/login";
 	}
 	
-	@GetMapping("/registerNegoziante")
-	public String getRegisterNegozioTemplate(Model model) {
-		model.addAttribute("negoziante", new Utente());
-		model.addAttribute("credentials", new Credentials());
-		return "registerNegozianteForm.html";
-	}
-	
-	@PostMapping("/registerNegoziante")
-	public String registerNegoziante(
-			@ModelAttribute("negoziante") Utente negoziante,
-			@ModelAttribute("credentials") Credentials credentials) {
-			credentials.setRole(Credentials.NEGOZIANTE_ROLE);
-			negoziante.setProdotti(null);
-			credentials.setUtente(negoziante);
-			credentialsService.saveCredentials(credentials);
-			return "redirect:/";
-	}
 	
 	@GetMapping("/login")
 	public String getLoginForm() {

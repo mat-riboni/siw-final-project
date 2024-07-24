@@ -1,28 +1,41 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width">
-  <title>Registrati</title>
-  <!-- UIkit CSS -->
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/uikit@3.20.10/dist/css/uikit.min.css" />
-  <!-- CSS -->
-  <link rel="stylesheet" href="/CSS/register.css" />
+<meta charset="ISO-8859-1">
+<title>Regtistrati</title>
+
+<!--CSS-->
+<link rel="stylesheet" type="text/css" href="CSS/register.css">
+<!--Font-->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
+
+
 </head>
 <body>
-  <h1>Register</h1>
+    
     <div class='form-container'>
-      <form class="form" th:action="@{/register}" method="post" enctype="multipart/form-data"/>
-        <input class="uk-input" type="text" placeholder="Email" th:field ="${utente.email}"/>
-        <input class="uk-input" type="text" placeholder="Nome" th:field="${utente.nome}"/>
-        <input class="uk-input" type="text" placeholder="Cognome" th:field="${utente.cognome}"/>
-        <input class="uk-input" type="text" placeholder="Username" th:field="${credentials.username}"/>
-		<input class="uk-input" type="password" placeholder="Password" th:field="${credentials.password}"/>
-		
-        <button class="uk-button uk-button-default" type="submit">Submit</button>
-      </form>
-    </div>
-  <script src="https://cdn.jsdelivr.net/npm/uikit@3.20.10/dist/js/uikit.min.js"></script>
-	<script src="https://cdn.jsdelivr.net/npm/uikit@3.20.10/dist/js/uikit-icons.min.js"></script>
+        <div class="head">
+            <h4>Crea un account!</h4>
+            <p>Se sei un negoziante spunta la casella in basso!</p>
+        </div>
+        
+        <form class="form" th:action="@{/register}" method="post" enctype="multipart/form-data">
+          <input type="text" placeholder="Email" th:field ="${utente.email}"/>
+          <input type="text" placeholder="Nome" th:field="${utente.nome}"/>
+          <input type="text" placeholder="Cognome" th:field="${utente.cognome}"/>
+          <input type="text" placeholder="Username" th:field="${credentials.username}"/>
+          <input type="password" placeholder="Password" th:field="${credentials.password}"/>
+          <span><input type="checkbox" name="negoziante" value="negoziante">
+                <label for="negoziante"> Sono un negoziante</label>
+          </span>
+          <button type="submit">Registrati</button>
+        </form>
+        <div class="bottom">
+            <span>Hai già un account? <a href="/login">Login</a></span>
+            <span>Torna alla <a href="/">Home</a></span>
+        </div>
+      </div>
 </body>
 </html>

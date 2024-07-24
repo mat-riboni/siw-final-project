@@ -1,6 +1,5 @@
 package it.uniroma3.vestiti.model;
 
-import java.util.List;
 import java.util.Objects;
 
 import jakarta.persistence.Column;
@@ -8,8 +7,6 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.OneToMany;
 
 @Entity
 public class Prodotto {
@@ -24,9 +21,7 @@ public class Prodotto {
 	@Column(nullable = false)
 	private float prezzo;
 	
-	@OneToMany
-	@JoinColumn(name = "prodotto_id")
-	List<Taglia> taglie;
+	private String taglia;
 
 	public Long getId() {
 		return id;
@@ -52,14 +47,6 @@ public class Prodotto {
 		this.prezzo = prezzo;
 	}
 
-	public List<Taglia> getTaglie() {
-		return taglie;
-	}
-
-	public void setTaglie(List<Taglia> taglie) {
-		this.taglie = taglie;
-	}
-
 	@Override
 	public int hashCode() {
 		return Objects.hash(id);
@@ -69,6 +56,14 @@ public class Prodotto {
 	public boolean equals(Object obj) {
 		Prodotto other = (Prodotto) obj;
 		return Objects.equals(id, other.id);
+	}
+
+	public String getTaglia() {
+		return taglia;
+	}
+
+	public void setTaglia(String taglia) {
+		this.taglia = taglia;
 	}
 	
 	

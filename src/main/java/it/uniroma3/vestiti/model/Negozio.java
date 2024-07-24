@@ -10,6 +10,7 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
+import jakarta.persistence.Lob;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
 
@@ -30,9 +31,9 @@ public class Negozio {
 	
 	private String citta;
 	
-	@OneToMany(cascade = {CascadeType.PERSIST, CascadeType.REMOVE})
-	@JoinColumn(name = "categoria_id")
-	private List<Categoria> categorie;
+	@Lob
+	private byte[] immagine;
+	
 	
 	@OneToMany
 	@JoinColumn(name = "negozio_id")
@@ -40,14 +41,6 @@ public class Negozio {
 	
 	@ManyToOne
 	private Utente negoziante;
-	
-	@OneToMany(mappedBy = "negozio")
-	private List<Prenotazione> prenotazioni;
-	
-
-	public List<Categoria> getCategorie(){
-		return this.categorie;
-	}
 	
 	public void setCitta(String citta) {
 		this.citta = citta;
@@ -57,9 +50,6 @@ public class Negozio {
 		return this.citta;
 	}
 	
-	public void setCategorie(List<Categoria> categorie) {
-		this.categorie = categorie;
-	}
 	
 	@Override
 	public int hashCode() {

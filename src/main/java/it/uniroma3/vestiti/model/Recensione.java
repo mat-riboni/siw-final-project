@@ -7,6 +7,7 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToOne;
 
 @Entity
@@ -19,13 +20,16 @@ public class Recensione {
 	@Column(nullable = false)
 	private int voto;
 	
-	@Column(nullable = false)
 	private String descrizione;
 	
+	@Column(nullable = false)
 	private String titolo;
 	
 	@OneToOne
 	private Utente autore;
+	
+	@ManyToOne
+	private Negozio negozio;
 
 	public int getVoto() {
 		return voto;

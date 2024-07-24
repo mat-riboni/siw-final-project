@@ -19,13 +19,10 @@ public class Prenotazione {
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Long id;
 	
-	@Column(nullable = false)
 	@OneToMany
 	@JoinColumn(name = "prenotazione_id")
 	private List<Prodotto> prodotti;
 	
-	@ManyToOne
-	private Negozio negozio;
 	
 	@ManyToOne
 	private Utente utente;
@@ -54,13 +51,6 @@ public class Prenotazione {
 		this.prodotti = prodotti;
 	}
 
-	public Negozio getNegozio() {
-		return negozio;
-	}
-
-	public void setNegozio(Negozio negozio) {
-		this.negozio = negozio;
-	}
 
 	@Override
 	public int hashCode() {
