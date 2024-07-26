@@ -3,12 +3,14 @@ package it.uniroma3.vestiti.model;
 import java.util.List;
 import java.util.Objects;
 
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.OneToMany;
+import jakarta.persistence.OneToOne;
 
 @Entity
 public class Utente {
@@ -23,8 +25,8 @@ public class Utente {
 	
 	private String email;
 	
-	@OneToMany(mappedBy = "negoziante")
-	List<Negozio> negoziPosseduti;
+	@OneToOne(cascade = CascadeType.ALL)
+	private Negozio negozio;
 	
 	@OneToMany
 	@JoinColumn(name = "utente_id")
@@ -46,12 +48,13 @@ public class Utente {
 		return id;
 	}
 	
-	public void setNegoziPosseduti(List<Negozio> negoziPosseduti) {
-		this.negoziPosseduti = negoziPosseduti;
+
+	public Negozio getNegozio() {
+		return negozio;
 	}
-	
-	public List<Negozio> getNegoiPosseduti(){
-		return this.negoziPosseduti;
+
+	public void setNegozio(Negozio negozio) {
+		this.negozio = negozio;
 	}
 
 	public void setId(Long id) {

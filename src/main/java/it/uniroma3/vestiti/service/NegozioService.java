@@ -1,6 +1,7 @@
 package it.uniroma3.vestiti.service;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -28,6 +29,12 @@ public class NegozioService {
 	public List<Negozio> findByNome(String nome){
 		return this.negozioRepository.findByNome(nome);
 	}
+	
+	public Optional<Negozio> findById(Long id) {
+		return this.negozioRepository.findById(id);
+	}
+	
+	
 	
 	
 	

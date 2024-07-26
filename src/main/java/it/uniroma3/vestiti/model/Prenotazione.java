@@ -3,7 +3,6 @@ package it.uniroma3.vestiti.model;
 import java.util.List;
 import java.util.Objects;
 
-import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -29,6 +28,17 @@ public class Prenotazione {
 
 	public Utente getUtente() {
 		return utente;
+	}
+	
+	@ManyToOne
+	private Negozio negozio;
+
+	public Negozio getNegozio() {
+		return negozio;
+	}
+
+	public void setNegozio(Negozio negozio) {
+		this.negozio = negozio;
 	}
 
 	public void setUtente(Utente utente) {

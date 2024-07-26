@@ -1,7 +1,9 @@
 package it.uniroma3.vestiti.controller;
 
+import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -46,4 +48,40 @@ public class NegozioController {
 			model.addAttribute("isSearching", true);
 			return "index.html";
 		}
+		
+		@PostMapping("/negoziante/modificaNegozio")
+		public String modificaNegozio(
+				@ModelAttribute("negozioNuovo") Negozio nuovo,
+				@ModelAttribute("negozio") Negozio negozio) {
+			
+			Optional<Negozio> optionalNegozio = this.negozioService.findById(negozio.getId());
+		    
+		    if (optionalNegozio.isPresent()) {
+		        Negozio vecchio = optionalNegozio.get();
+		        
+		        if (nuovo.getCitta() != null && !nuovo.getCitta().trim().isEmpty()) {
+		            vecchio.setCitta(nuovo.getCitta());
+		        }
+		        if (nuovo.getDescrizione() != null && !nuovo.getDescrizione().trim().isEmpty()) {
+		            vecchio.setDescrizione(nuovo.getDescrizione());
+		        }
+		        if (nuovo.getNome() != null && !nuovo.getNome().trim().isEmpty()) {
+		            vecchio.setNome(nuovo.getNome());
+		        }
+		        if (nuovo.getIndirizzo() != null && !nuovo.getIndirizzo().trim().isEmpty()) {
+		            vecchio.setIndirizzo(nuovo.getIndirizzo());
+		        }
+		        if (nuovo.getImmagine() != null && nuovo.getImmagine().length > 0) {
+		            vecchio.setImmagine(nuovo.getImmagine());
+		        }
+		        
+		        this.negozioService.save(vecchio);
+		        
+		    } 
+			
+			
+			return "redirect:/negoziante";
+		}
+		
+		
 }

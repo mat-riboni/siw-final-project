@@ -15,15 +15,20 @@
 </head>
 <body>
     
-    <div class='form-container'>
+    <div class="form-container">
         <div class="head">
             <h4>Accedi</h4>
-            <p>Bentornato!</p>
+			<div class="error" th:if="${param.error}">
+			    <span>Email o password errati</span>
+			</div>
+			<div th:unless="${param.error}">
+				<p>Bentornato!</p>
+			</div>
         </div>
         
         <form class="form" th:action="@{/login}" method="post">
-          <input type="text" placeholder="Username" name="username"/>
-          <input type="password" placeholder="Password" password="password"/>
+          <input type="text" placeholder="Username" name="username">
+          <input type="password" placeholder="Password" name="password">
           <button type="submit">Login</button>
         </form>
         <div class="bottom">
