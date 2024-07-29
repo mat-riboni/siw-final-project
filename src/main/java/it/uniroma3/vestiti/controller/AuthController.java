@@ -1,5 +1,7 @@
 package it.uniroma3.vestiti.controller;
 
+import java.util.ArrayList;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AnonymousAuthenticationToken;
 import org.springframework.security.core.Authentication;
@@ -16,6 +18,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import it.uniroma3.vestiti.costanti.Costanti;
 import it.uniroma3.vestiti.model.Credentials;
 import it.uniroma3.vestiti.model.Negozio;
+import it.uniroma3.vestiti.model.Prenotazione;
 import it.uniroma3.vestiti.model.Utente;
 import it.uniroma3.vestiti.service.CredentialsService;
 import it.uniroma3.vestiti.service.NegozioService;
@@ -55,6 +58,7 @@ public class AuthController {
 	            	vuoto.setDescrizione(Costanti.descrizioneDefault);
 	            	vuoto.setIndirizzo(Costanti.indirizzoDefault);
 	            	vuoto.setProprietario(utente);
+	            	vuoto.setPrenotazioni(new ArrayList<Prenotazione>());
 	            	utente.setNegozio(vuoto);
 	            }
 	            credentials.setUtente(utente);

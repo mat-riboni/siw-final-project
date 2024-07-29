@@ -1,7 +1,10 @@
 package it.uniroma3.vestiti.model;
 
+import java.sql.Types;
 import java.util.List;
 import java.util.Objects;
+
+import org.hibernate.annotations.JdbcTypeCode;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -34,10 +37,33 @@ public class Negozio {
 	
 	private String citta;
 	
+	@OneToMany
+	private List<Prenotazione> prenotazioni;
+	
+
 	@Lob
+	@JdbcTypeCode(Types.VARBINARY)
 	private byte[] immagine;
 	
+	private String imageMIMEType;
 	
+	
+	public String getImageMIMEType() {
+		return imageMIMEType;
+	}
+
+	public void setImageMIMEType(String imageMIMEType) {
+		this.imageMIMEType = imageMIMEType;
+	}
+	
+	public List<Prenotazione> getPrenotazioni() {
+		return prenotazioni;
+	}
+
+	public void setPrenotazioni(List<Prenotazione> prenotazioni) {
+		this.prenotazioni = prenotazioni;
+	}
+
 	public byte[] getImmagine() {
 		return immagine;
 	}

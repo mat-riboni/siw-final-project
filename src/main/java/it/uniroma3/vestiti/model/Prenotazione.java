@@ -1,5 +1,6 @@
 package it.uniroma3.vestiti.model;
 
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Objects;
 
@@ -22,16 +23,26 @@ public class Prenotazione {
 	@JoinColumn(name = "prenotazione_id")
 	private List<Prodotto> prodotti;
 	
+	@ManyToOne
+	private Negozio negozio;
+	
 	
 	@ManyToOne
 	private Utente utente;
+	
+	private LocalDateTime dataOra;
+
+	public LocalDateTime getDataOra() {
+		return dataOra;
+	}
+
+	public void setDataOra(LocalDateTime dataOra) {
+		this.dataOra = dataOra;
+	}
 
 	public Utente getUtente() {
 		return utente;
 	}
-	
-	@ManyToOne
-	private Negozio negozio;
 
 	public Negozio getNegozio() {
 		return negozio;

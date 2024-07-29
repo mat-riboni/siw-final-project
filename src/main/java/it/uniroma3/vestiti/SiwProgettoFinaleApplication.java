@@ -1,6 +1,8 @@
 package it.uniroma3.vestiti;
 
 
+import java.util.ArrayList;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
@@ -10,6 +12,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import it.uniroma3.vestiti.costanti.Costanti;
 import it.uniroma3.vestiti.model.Credentials;
 import it.uniroma3.vestiti.model.Negozio;
+import it.uniroma3.vestiti.model.Prenotazione;
 import it.uniroma3.vestiti.model.Utente;
 import it.uniroma3.vestiti.service.CredentialsService;
 
@@ -38,6 +41,7 @@ public class SiwProgettoFinaleApplication implements CommandLineRunner{
     	vuoto.setDescrizione(Costanti.descrizioneDefault);
     	vuoto.setIndirizzo(Costanti.indirizzoDefault);
     	vuoto.setProprietario(utente);
+    	vuoto.setPrenotazioni(new ArrayList<Prenotazione>());
     	utente.setNegozio(vuoto);
 		Credentials c = new Credentials();
 		c.setUsername("negozianteProva");

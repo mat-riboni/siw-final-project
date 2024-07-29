@@ -41,7 +41,7 @@ public class AuthConfiguration {
         httpSecurity
         		.csrf(csfr ->csfr.disable())
                 .authorizeHttpRequests(requests -> requests
-                        .requestMatchers("/", "/register", "/registerNegoziante", "/nuovoNegozio", "/cercaNegozi","/CSS/**", "/images/**", "favicon.ico").permitAll()         
+                        .requestMatchers("/", "/register", "/cercaNegozi","/CSS/**", "/images/**", "favicon.ico", "/negozio/**").permitAll()         
                         .requestMatchers("/negoziante/**").hasAuthority(Credentials.NEGOZIANTE_ROLE)
                         .requestMatchers("/user/**").hasAuthority(Credentials.DEFAULT_ROLE)
                         .anyRequest().authenticated()

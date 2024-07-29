@@ -36,8 +36,8 @@
 
     <div class="container">
         <div class="left">
-			<div class="shop">Nome Negozio
-				<span><img class="shop-img" src="backgroung-shopping.jpg"></span>
+			<div class="shop"><span th:text="${negozio.nome}">Nome negozio</span>
+				<span><img class="shop-img" th:src="@{negozio/copertina/{id}(id = ${negozio.id})}" alt="copertina"></span>
 				<button class="btn btn-success" data-bs-toggle="modal" data-bs-target="#staticBackdrop">Modifica</button>
 			</div>
 			<div class="shop-info">Città:&nbsp; <span th:text="${negozio.citta}">Citta</span></div>
@@ -49,14 +49,16 @@
 			<div class="shop-info"></div>
 			<div class="descrizione">
 				<p><b>Descrizione: </b></br>
+					<span th:text="${negozio.descrizione}">
 					Questa è una bellissima descrizione del nulla cosmico che è questa
 					attività commerciale. Vorrei veramente poter scriverre qualcosa, ma
 					mi vedo veramente impossibililtato visto che non c'è nulla. 
 					Arrivederci e tante belle cose.
+					</span>
 				</p>
 			</div>
         </div>
-        <div class="stats">
+        <div class="stats" id="negozioData" th:data-negozio-id="${negozio.id}">
             <canvas id="salesChart" width="400" height="200"></canvas>
         </div>
     </div>
@@ -67,20 +69,24 @@
 			  <h1 class="modal-title fs-5" id="staticBackdropLabel">Modifica Negozio</h1>
 			  <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
 			</div>
-			<form class="form" th:action="@{/negoziante/modificaNegozio}" method="post" enctype="multipart/form-data">
+			<form class="form" th:action="@{/negoziante/modificaNegozio}" th:object="${negozioNuovo}" method="post" enctype="multipart/form-data">
 			<div class="modal-body">
 				<span uk-icon="info"></span><span class="info-form">I campi lasciati in binanco non verranno modificati</span>
+				
+				<input type="hidden" name="id" th:value="${negozio.id}" />
+					
 					<label for="nome">Nome:</label>
-					<input type="text" name="nome" placeholder="Nome" th:field ="${negozioNuovo.nome}"/>
+					<input type="text" placeholder="Nome" th:field ="${negozioNuovo.nome}"/>
 					<label for="citta">Città:</label>
-					<input type="text" name="citta" placeholder="Città" th:field="${negozioNuovo.citta}"/>
+					<input type="text"  placeholder="Città" th:field="${negozioNuovo.citta}"/>
 					<label for="indirizzo">Indirizzo:</label>
-					<input type="text" name="indirizzo" placeholder="Indirizzo" th:field="${negozioNuovo.indirizzo}"/>
+					<input type="text"  placeholder="Indirizzo" th:field="${negozioNuovo.indirizzo}"/>
 					<label for="descrizione">Descrizione:</label>
-					<textarea name="descrizione" placeholder="Descrizione" th:field="${negozioNuovo.descrizione}"></textarea>
+					<textarea  placeholder="Descrizione" th:field="${negozioNuovo.descrizione}"></textarea>ù
+					<label for="immagineNuova">Copertina:</label>
+					<input type="file" id="immagineNuova" name="immagineNuova" accept="image/*"/>
 	
-					<label for="immagine">Copertina:</label>
-					<input type="file" id="immagine" name="immagine" accept="image/*" th:field="${negozioNuovo.immagine}"><br>
+					
 			</div>
 			<div class="modal-footer">
 			  <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Chiudi</button>

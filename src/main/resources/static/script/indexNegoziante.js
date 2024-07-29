@@ -1,16 +1,21 @@
-async function fetchSalesData() {
-    const response = await fetch('/api/sales');
-    const data = await response.json();
-    return data;
+async function fetchMese2prenotazione() {
+	
+	const shopElement = document.getElementById("negozioData");
+    const negozioId = shopElement.dataset.negozioId;
+    const response = await fetch('/negozio/' + negozioId + '/prenotazioni');
+    const mese2prenotazione = await response.json();
+    return mese2prenotazione;
 }
 
-// Funzione per creare il grafico
 async function createChart() {
-    //const salesData = await fetchSalesData();
+    const mese2prenotazione = await fetchMese2prenotazione();
 
     // Prepara i dati per Chart.js
-    const labels = ['genn','feb','mar','apr','mag','giugn', 'lugl'] ;//salesData.map(sale => sale.product);
-    const data = [1,2,3,4,5,6,7] //salesData.map(sale => sale.amount);
+    const labels = Object.keys(mese2prenotazione);
+    
+    const data = labels.map(mese => mese2prenotazione[mese].length);
+    
+ 
 
     const ctx = document.getElementById('salesChart').getContext('2d');
     const chart = new Chart(ctx, {
@@ -18,7 +23,7 @@ async function createChart() {
         data: {
             labels: labels,
             datasets: [{
-                label: 'Vendite',
+                label: 'Numero di Prenotazioni',
                 data: data,
                 backgroundColor: 'rgba(255, 94, 45, 0.2)',
                 borderColor: 'rgba(255, 94, 45, 1)',
