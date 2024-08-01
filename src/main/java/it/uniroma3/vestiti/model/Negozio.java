@@ -6,6 +6,7 @@ import java.util.Objects;
 
 import org.hibernate.annotations.JdbcTypeCode;
 
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -37,9 +38,23 @@ public class Negozio {
 	
 	private String citta;
 	
-	@OneToMany
+	@OneToMany(cascade = CascadeType.PERSIST)
 	private List<Prenotazione> prenotazioni;
 	
+	@OneToMany
+	@JoinColumn(name = "negozio_id")
+	private List<Recensione> recensioni;
+	
+	@OneToMany(cascade = CascadeType.PERSIST)
+	private List<Prodotto> prodotti;
+	
+	public List<Prodotto> getProdotti() {
+		return prodotti;
+	}
+
+	public void setProdotti(List<Prodotto> prodotti) {
+		this.prodotti = prodotti;
+	}
 
 	@Lob
 	@JdbcTypeCode(Types.VARBINARY)
@@ -80,21 +95,6 @@ public class Negozio {
 		this.recensioni = recensioni;
 	}
 
-	public Utente getNegoziante() {
-		return negoziante;
-	}
-
-	public void setNegoziante(Utente negoziante) {
-		this.negoziante = negoziante;
-	}
-
-	@OneToMany
-	@JoinColumn(name = "negozio_id")
-	private List<Recensione> recensioni;
-	
-	@ManyToOne
-	private Utente negoziante;
-	
 	public void setCitta(String citta) {
 		this.citta = citta;
 	}

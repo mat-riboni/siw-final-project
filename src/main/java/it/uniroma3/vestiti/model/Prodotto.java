@@ -1,12 +1,19 @@
 package it.uniroma3.vestiti.model;
 
+import java.sql.Types;
+import java.util.List;
 import java.util.Objects;
 
+import org.hibernate.annotations.JdbcTypeCode;
+
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.Lob;
+import jakarta.persistence.OneToMany;
 
 @Entity
 public class Prodotto {
@@ -21,7 +28,39 @@ public class Prodotto {
 	@Column(nullable = false)
 	private float prezzo;
 	
-	private String taglia;
+	@OneToMany(cascade = CascadeType.ALL)
+	private List<Taglia> taglie;
+	
+	@Lob
+	@JdbcTypeCode(Types.VARBINARY)
+	private byte[] immagine;
+	
+	private String imageMIMEType;
+
+	
+	public List<Taglia> getTaglie() {
+		return taglie;
+	}
+
+	public void setTaglie(List<Taglia> taglie) {
+		this.taglie = taglie;
+	}
+
+	public byte[] getImmagine() {
+		return immagine;
+	}
+
+	public void setImmagine(byte[] immagine) {
+		this.immagine = immagine;
+	}
+
+	public String getImageMIMEType() {
+		return imageMIMEType;
+	}
+
+	public void setImageMIMEType(String imageMIMEType) {
+		this.imageMIMEType = imageMIMEType;
+	}
 
 	public Long getId() {
 		return id;
@@ -58,13 +97,7 @@ public class Prodotto {
 		return Objects.equals(id, other.id);
 	}
 
-	public String getTaglia() {
-		return taglia;
-	}
 
-	public void setTaglia(String taglia) {
-		this.taglia = taglia;
-	}
 	
 	
 	

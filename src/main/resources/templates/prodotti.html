@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Vestiti</title>
+
+<!-- UIkit CSS -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/uikit@3.20.10/dist/css/uikit.min.css" />
+<!--Bootstrap CSS -->
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+<!--CSS-->
+<link rel="stylesheet" type="text/css" th:href="@{/CSS/prodotti.css}">
+<!--Font-->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
+
+
+</head>
+<body>
+
+	<header>
+        <button class="btn btn-secondary"><span uk-icon="arrow-left"></span>Indietro</button>
+		<div class="center-header">
+            
+			<div>Logo</div>
+			<form class="d-flex" role="search">
+				<input class="form-control me-2" type="search" placeholder="Cerca negozio..." aria-label="Search">
+				<button class="btn btn-success" type="submit"><span uk-icon="search" class="search"></span></button>
+			  </form>
+		</div>
+		<div class="user">
+			<div class="benvenuto">Ciao, username!</div>
+			<button class="btn btn-success" type="submit">Logout<span uk-icon="sign-out"></span></button>
+		</div>
+	</header>
+    <div class="titolo"><h3>Prodotti</h3></div>
+    <div class="container">
+		
+        <div class="card" style="width: 18rem;" th:each="prodotto : ${prodotti}">
+            <img src="backgroung-shopping.jpg" class="card-img-top" alt="...">
+            <div class="card-body">
+              <h5 class="card-title" th:text="${prodotto.nome}">Nome</h5>
+              <p class="card-text">	
+						  <span th:each="taglia : ${prodotto.taglie}">
+			 	             Taglia: <span th:text="${taglia.taglia}"></span>
+			                 Quantità: <span th:text="${taglia.quantita}"></span><br/>
+			              </span></p>
+              <a href="#" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#modificaProdotto-[[${prodotto.id}]]">Modifica</a>
+            </div>
+            <div class="modal fade" id="modificaProdotto-[[${prodotto.id}]]" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+                <div class="modal-dialog">
+                  <div class="modal-content">
+                    <div class="modal-header">
+                      <h1 class="modal-title fs-5" id="staticBackdropLabel">Modifica Prodotto</h1>
+                      <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <form class="form" th:action="@{/modificaProdotto}" method="post" enctype="multipart/form-data"></form>
+                    <div class="modal-body">
+                        
+                            <label for="nome">Nome:</label>
+                            <input type="text" name="nome" placeholder="Nome"/>
+                            <label for="prezzo">Prezzo:</label>
+                            <input type="text" name="prezzo" placeholder="Prezzo"/>
+                            
+                            <div class="taglie">
+                                <div class="taglia">
+                                    <div class="etichetta">
+                                        <label for="quantita">-XS</label>
+                                    </div>
+                                    <input type="text" name="quantita-xs" class="quantita" placeholder="Quantità"></input>
+                                </div>
+                                
+                                <div class="taglia">
+                                    <div class="etichetta">
+                                        <label for="quantita">-S</label>
+                                    </div>                            
+                                    <input type="text" name="quantita-s" class="quantita" placeholder="Quantità"></input>
+                                </div>
+        
+                                <div class="taglia">
+                                    <div class="etichetta">
+                                        <label for="quantita">-M</label>
+                                    </div>
+                                    <input type="text" name="quantita-m" class="quantita" placeholder="Quantità"></input>
+                                </div>
+        
+                                <div class="taglia">
+                                    <div class="etichetta">
+                                        <label for="quantita">-L</label>
+                                    </div>
+                                    <input type="text" name="quantita-l" class="quantita" placeholder="Quantità"></input>
+                                </div>
+        
+                                <div class="taglia">
+                                    <div class="etichetta">
+                                        <label for="quantita">-XL</label>
+                                    </div>
+                                     <input type="text" name="quantita-xl" class="quantita" placeholder="Quantità"></input>
+                                </div>
+                            </div>
+        
+                            <label for="immagine">Copertina:</label>
+                            <input type="file" id="immagine" name="immagine" accept="image/*" required><br>
+                    </div>
+                    <div class="modal-footer">
+                      <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Chiudi</button>
+                      <button type="button" class="btn btn-success">Salva</button>
+                    </div>
+                    </form>
+                  </div>
+                </div>
+            </div>
+          </div>
+    
+    <button class="nuovo-prodotto" data-bs-toggle="modal" data-bs-target="#nuovoProdotto"><span uk-icon="plus" class="plus"></span>Aggiungi Prodotto</button>
+
+    <div class="modal fade" id="nuovoProdotto" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+		<div class="modal-dialog">
+		  <div class="modal-content">
+			<div class="modal-header">
+			  <h1 class="modal-title fs-5" id="staticBackdropLabel">Nuovo Prodotto</h1>
+			  <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+			</div>
+			<form class="form" th:action="@{/nuovoProdotto}" method="post" enctype="multipart/form-data"></form>
+			<div class="modal-body">
+				
+					<label for="nome">Nome:</label>
+					<input type="text" name="nome" placeholder="Nome" />
+					<label for="prezzo">Prezzo:</label>
+					<input type="text" name="prezzo" placeholder="Prezzo"/>
+					
+					<div class="taglie">
+					    <div class="taglia">
+					        <div class="etichetta">
+					           <label for="quantita">-XS</label>
+					        </div>
+					        <input type="text" name="quantita-xs" class="quantita" placeholder="Quantità"></input>
+					    </div>
+					                               
+					    <div class="taglia">
+					         <div class="etichetta">
+					              <label for="quantita">-S</label>
+					          </div>                            
+					     <input type="text" name="quantita-s" class="quantita" placeholder="Quantità"></input>
+					     </div>
+					        
+					     <div class="taglia">
+					         <div class="etichetta">
+					             <label for="quantita">-M</label>
+					         </div>
+					         <input type="text" name="quantita-m" class="quantita" placeholder="Quantità"></input>
+					      </div>
+					        
+					      <div class="taglia">
+					          <div class="etichetta">
+					               <label for="quantita">-L</label>
+					          </div>
+					          <input type="text" name="quantita-l" class="quantita" placeholder="Quantità"></input>
+					      </div>
+					        
+					      <div class="taglia">
+					          <div class="etichetta">
+					               <label for="quantita">-XL</label>
+					          </div>
+					          <input type="text" name="quantita-xl" class="quantita" placeholder="Quantità"></input>
+					      </div>
+				   </div>
+					<label for="immagine">Copertina:</label>
+					<input type="file" id="immagine" name="immagine" accept="image/*" required><br>
+			</div>
+			<div class="modal-footer">
+			  <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Chiudi</button>
+			  <button type="button" class="btn btn-success">Salva</button>
+			</div>
+			</form>
+		  </div>
+		</div>
+	</div>
+    
+
+	<!-- UIkit JS -->
+	<script src="https://cdn.jsdelivr.net/npm/uikit@3.20.10/dist/js/uikit.min.js"></script>
+	<script src="https://cdn.jsdelivr.net/npm/uikit@3.20.10/dist/js/uikit-icons.min.js"></script>
+	<!-- Bootstrap JS -->
+	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+	</body>
+</html>

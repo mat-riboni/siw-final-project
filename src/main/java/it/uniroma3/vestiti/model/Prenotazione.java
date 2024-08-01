@@ -4,6 +4,7 @@ import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Objects;
 
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -19,7 +20,7 @@ public class Prenotazione {
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Long id;
 	
-	@OneToMany
+	@OneToMany(cascade = CascadeType.PERSIST)
 	@JoinColumn(name = "prenotazione_id")
 	private List<Prodotto> prodotti;
 	
@@ -27,10 +28,12 @@ public class Prenotazione {
 	private Negozio negozio;
 	
 	
-	@ManyToOne
+	@ManyToOne(cascade = CascadeType.PERSIST)
 	private Utente utente;
 	
 	private LocalDateTime dataOra;
+	
+	private String stato;
 
 	public LocalDateTime getDataOra() {
 		return dataOra;
@@ -88,6 +91,14 @@ public class Prenotazione {
 			return false;
 		Prenotazione other = (Prenotazione) obj;
 		return Objects.equals(id, other.id);
+	}
+
+	public String getStato() {
+		return stato;
+	}
+
+	public void setStato(String stato) {
+		this.stato = stato;
 	}
 	
 	

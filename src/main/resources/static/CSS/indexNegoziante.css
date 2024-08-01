@@ -1,14 +1,15 @@
 body {
     font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
     font-weight: 400;
-    background-color: rgb(250, 250, 250);
+    background-color: rgb(231, 251, 234);
     margin: 0;
     padding: 0;
     overflow-y: auto;
+    height: 100vh;
 }
 
 header {
-    background-color: rgb(250, 250, 250);
+    background-color: rgb(231, 251, 234);
     display: flex;
     justify-content: center;
     align-items: center;
@@ -19,7 +20,7 @@ header {
     display: flex;
     width: 50%;
     height: 70%;
-    background-color: rgb(255, 255, 255);
+    background-color: rgb(250, 250, 250);
     align-items: center;
     justify-content: space-around;
     border-radius: 30px;
@@ -53,7 +54,7 @@ header * {
 
 .container {
     width: 100%;
-    background-color: rgb(250, 250, 250);
+    background-color: rgb(231, 251, 234);
     display: flex;
     justify-content: center;
     align-items: stretch;
@@ -61,7 +62,7 @@ header * {
 
 .stats {
     margin-top: 30px;
-    flex: 5;
+    flex: 9;
     background-color: hsl(0, 0%, 100%);
     border: 1px solid rgb(201, 201, 201);
     display: flex;
@@ -69,11 +70,13 @@ header * {
     align-items: center;
     justify-content: center;
     border-radius: 10px;
+    padding: 20px;
+    max-height: 500px;
 }
 
 .left {
     margin-top: 30px;
-    flex: 2;
+    flex: 5;
     background-color: rgb(255, 255, 255);
     border: 1px solid rgb(201, 201, 201);
     display: flex;
@@ -81,6 +84,7 @@ header * {
     justify-content: space-between; 
     margin-right: 50px;
     border-radius: 10px;
+    max-height: 600px;
 }
 
 
@@ -131,7 +135,7 @@ header * {
     font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 }
 
-.form{
+.modal-body{
     display: flex;
     flex-direction: column;
     width:100%;
@@ -154,3 +158,79 @@ textarea{
     height: 100px;
     margin-bottom: 10px;
 }
+
+.btns{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+
+.btns button{
+    margin-left: 10px;
+}
+
+
+.uk-switcher{
+    width:90%;
+    height: 100%;
+}
+.badge{
+    margin-right:10%;
+}
+
+
+
+.stats::-webkit-scrollbar { 
+    display: none;  /* Safari and Chrome */
+}
+
+.uk-switcher::-webkit-scrollbar { 
+    display: none;  /* Safari and Chrome */
+}
+.uk-switcher{
+	overflow-y: scroll;
+    -ms-overflow-style: none;  /* Internet Explorer 10+ */
+    scrollbar-width: none;  /* Firefox */
+}
+
+.stats{
+	overflow-y: scroll;
+    -ms-overflow-style: none;  /* Internet Explorer 10+ */
+    scrollbar-width: none;  /* Firefox */
+    
+}
+
+.stato{
+    margin-left: 30px;
+}
+
+.tab{
+	min-height: 30px!;
+}
+
+.uk-tab{
+	min-height: 30px !;
+}
+
+
+
+.uk-switcher .list-group {
+    max-height: 400px;
+    overflow: auto; 
+    padding-right: 15px; 
+}
+
+/* Nasconde la scrollbar su Chrome e Safari */
+.uk-switcher .list-group::-webkit-scrollbar {
+    display: none;
+}
+
+/* Nasconde la scrollbar su Firefox */
+.uk-switcher .list-group {
+    scrollbar-width: none;
+}
+
+.list-group-item{
+	margin-top: 10px;
+}
+

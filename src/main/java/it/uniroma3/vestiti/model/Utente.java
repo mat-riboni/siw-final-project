@@ -25,12 +25,8 @@ public class Utente {
 	
 	private String email;
 	
-	@OneToOne(cascade = CascadeType.ALL)
+	@OneToOne(cascade = CascadeType.PERSIST)
 	private Negozio negozio;
-	
-	@OneToMany
-	@JoinColumn(name = "utente_id")
-	private List<Prodotto> prodotti;
 	
 	
 	@Override
@@ -83,14 +79,6 @@ public class Utente {
 
 	public void setEmail(String email) {
 		this.email = email;
-	}
-
-	public List<Prodotto> getProdotti() {
-		return prodotti;
-	}
-
-	public void setProdotti(List<Prodotto> prodotti) {
-		this.prodotti = prodotti;
 	}
 
 	@Override
