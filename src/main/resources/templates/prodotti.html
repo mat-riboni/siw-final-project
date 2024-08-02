@@ -31,153 +31,30 @@
 		</div>
 		<div class="user">
 			<div class="benvenuto">Ciao, username!</div>
-			<button class="btn btn-success" type="submit">Logout<span uk-icon="sign-out"></span></button>
+			<button class="btn btn-success" type="submit" th:onclick="|window.location.href = '/logout'|">Logout<span uk-icon="sign-out"></span></button>
 		</div>
 	</header>
     <div class="titolo"><h3>Prodotti</h3></div>
     <div class="container">
 		
         <div class="card" style="width: 18rem;" th:each="prodotto : ${prodotti}">
-            <img src="backgroung-shopping.jpg" class="card-img-top" alt="...">
+            <img th:src="@{/prodotto/{prodottoId}/immagine(prodottoId=${prodotto.id})}" class="card-img-top" alt="Prodotto">
             <div class="card-body">
               <h5 class="card-title" th:text="${prodotto.nome}">Nome</h5>
-              <p class="card-text">	
+              <div class="card-text">	
 						  <span th:each="taglia : ${prodotto.taglie}">
-			 	             Taglia: <span th:text="${taglia.taglia}"></span>
-			                 Quantità: <span th:text="${taglia.quantita}"></span><br/>
-			              </span></p>
-              <a href="#" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#modificaProdotto-[[${prodotto.id}]]">Modifica</a>
-            </div>
-            <div class="modal fade" id="modificaProdotto-[[${prodotto.id}]]" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
-                <div class="modal-dialog">
-                  <div class="modal-content">
-                    <div class="modal-header">
-                      <h1 class="modal-title fs-5" id="staticBackdropLabel">Modifica Prodotto</h1>
-                      <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                    </div>
-                    <form class="form" th:action="@{/modificaProdotto}" method="post" enctype="multipart/form-data"></form>
-                    <div class="modal-body">
-                        
-                            <label for="nome">Nome:</label>
-                            <input type="text" name="nome" placeholder="Nome"/>
-                            <label for="prezzo">Prezzo:</label>
-                            <input type="text" name="prezzo" placeholder="Prezzo"/>
-                            
-                            <div class="taglie">
-                                <div class="taglia">
-                                    <div class="etichetta">
-                                        <label for="quantita">-XS</label>
-                                    </div>
-                                    <input type="text" name="quantita-xs" class="quantita" placeholder="Quantità"></input>
-                                </div>
-                                
-                                <div class="taglia">
-                                    <div class="etichetta">
-                                        <label for="quantita">-S</label>
-                                    </div>                            
-                                    <input type="text" name="quantita-s" class="quantita" placeholder="Quantità"></input>
-                                </div>
-        
-                                <div class="taglia">
-                                    <div class="etichetta">
-                                        <label for="quantita">-M</label>
-                                    </div>
-                                    <input type="text" name="quantita-m" class="quantita" placeholder="Quantità"></input>
-                                </div>
-        
-                                <div class="taglia">
-                                    <div class="etichetta">
-                                        <label for="quantita">-L</label>
-                                    </div>
-                                    <input type="text" name="quantita-l" class="quantita" placeholder="Quantità"></input>
-                                </div>
-        
-                                <div class="taglia">
-                                    <div class="etichetta">
-                                        <label for="quantita">-XL</label>
-                                    </div>
-                                     <input type="text" name="quantita-xl" class="quantita" placeholder="Quantità"></input>
-                                </div>
-                            </div>
-        
-                            <label for="immagine">Copertina:</label>
-                            <input type="file" id="immagine" name="immagine" accept="image/*" required><br>
-                    </div>
-                    <div class="modal-footer">
-                      <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Chiudi</button>
-                      <button type="button" class="btn btn-success">Salva</button>
-                    </div>
-                    </form>
-                  </div>
-                </div>
-            </div>
-          </div>
-    
-    <button class="nuovo-prodotto" data-bs-toggle="modal" data-bs-target="#nuovoProdotto"><span uk-icon="plus" class="plus"></span>Aggiungi Prodotto</button>
-
-    <div class="modal fade" id="nuovoProdotto" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
-		<div class="modal-dialog">
-		  <div class="modal-content">
-			<div class="modal-header">
-			  <h1 class="modal-title fs-5" id="staticBackdropLabel">Nuovo Prodotto</h1>
-			  <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+			 	             Taglia: <span th:text="${taglia.taglia}"></span>&nbsp;|
+			                 quantità: <span th:text="${taglia.quantita}"></span><br/>
+			              </span>
+					  </br><b><span th:text="${prodotto.prezzo}">Prezzo</span>€</b>
+				  </p>
+              	<a th:href="@{/negoziante/prodotto/{id}(id=${prodotto.id})}" class="btn btn-success">Modifica</a>
+            	</div>
 			</div>
-			<form class="form" th:action="@{/nuovoProdotto}" method="post" enctype="multipart/form-data"></form>
-			<div class="modal-body">
-				
-					<label for="nome">Nome:</label>
-					<input type="text" name="nome" placeholder="Nome" />
-					<label for="prezzo">Prezzo:</label>
-					<input type="text" name="prezzo" placeholder="Prezzo"/>
-					
-					<div class="taglie">
-					    <div class="taglia">
-					        <div class="etichetta">
-					           <label for="quantita">-XS</label>
-					        </div>
-					        <input type="text" name="quantita-xs" class="quantita" placeholder="Quantità"></input>
-					    </div>
-					                               
-					    <div class="taglia">
-					         <div class="etichetta">
-					              <label for="quantita">-S</label>
-					          </div>                            
-					     <input type="text" name="quantita-s" class="quantita" placeholder="Quantità"></input>
-					     </div>
-					        
-					     <div class="taglia">
-					         <div class="etichetta">
-					             <label for="quantita">-M</label>
-					         </div>
-					         <input type="text" name="quantita-m" class="quantita" placeholder="Quantità"></input>
-					      </div>
-					        
-					      <div class="taglia">
-					          <div class="etichetta">
-					               <label for="quantita">-L</label>
-					          </div>
-					          <input type="text" name="quantita-l" class="quantita" placeholder="Quantità"></input>
-					      </div>
-					        
-					      <div class="taglia">
-					          <div class="etichetta">
-					               <label for="quantita">-XL</label>
-					          </div>
-					          <input type="text" name="quantita-xl" class="quantita" placeholder="Quantità"></input>
-					      </div>
-				   </div>
-					<label for="immagine">Copertina:</label>
-					<input type="file" id="immagine" name="immagine" accept="image/*" required><br>
-			</div>
-			<div class="modal-footer">
-			  <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Chiudi</button>
-			  <button type="button" class="btn btn-success">Salva</button>
-			</div>
-			</form>
-		  </div>
-		</div>
+		</div>	
+    	<button class="nuovo-prodotto" th:onclick="|window.location.href = '/negoziante/prodotto/' + ${prodotto.id}|"><span uk-icon="plus" class="plus"></span>Aggiungi Prodotto</button>
 	</div>
-    
+    </div>
 
 	<!-- UIkit JS -->
 	<script src="https://cdn.jsdelivr.net/npm/uikit@3.20.10/dist/js/uikit.min.js"></script>

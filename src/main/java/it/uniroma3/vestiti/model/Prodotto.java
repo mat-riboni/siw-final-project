@@ -13,6 +13,7 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Lob;
+import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
 
 @Entity
@@ -36,8 +37,19 @@ public class Prodotto {
 	private byte[] immagine;
 	
 	private String imageMIMEType;
+	
+	@ManyToOne
+	Negozio negozio;
 
 	
+	public Negozio getNegozio() {
+		return negozio;
+	}
+
+	public void setNegozio(Negozio negozio) {
+		this.negozio = negozio;
+	}
+
 	public List<Taglia> getTaglie() {
 		return taglie;
 	}

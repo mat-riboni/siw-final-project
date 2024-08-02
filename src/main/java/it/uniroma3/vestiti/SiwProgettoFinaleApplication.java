@@ -66,26 +66,27 @@ public class SiwProgettoFinaleApplication implements CommandLineRunner{
     			Prodotto prod = new Prodotto();
     			prod.setNome("Green");
     			prod.setPrezzo(10);
+    			prod.setNegozio(vuoto);
     			List<Taglia> taglie = new ArrayList<>();
     			
     			Taglia xs = new Taglia();
-    			xs.setTaglia("xs");
+    			xs.setTaglia("XS");
     			xs.setQuantita(2);
     			taglie.add(xs);
     			
     			Taglia s = new Taglia();
-    			s.setTaglia("s");
+    			s.setTaglia("S");
     			s.setQuantita(2);
     			taglie.add(s);
     			
     			Taglia m = new Taglia();
     			m.setQuantita(3);
-    			m.setTaglia("m");
+    			m.setTaglia("M");
     			taglie.add(m);
  
     			
     			Taglia l = new Taglia();
-    			l.setTaglia("l");
+    			l.setTaglia("L");
     			l.setQuantita(5);
     			taglie.add(l);
     			

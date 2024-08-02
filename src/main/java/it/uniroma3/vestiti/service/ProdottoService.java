@@ -50,4 +50,18 @@ public class ProdottoService {
 		
 		return strb.toString();
 	}
+	
+	public Prodotto findById(Long Id) {
+		Optional<Prodotto> optionalProdotto = this.prodottoRepository.findById(Id);
+		Prodotto prodotto = null;
+		if(optionalProdotto.isPresent()) {
+			prodotto = optionalProdotto.get();
+		}
+		
+		return prodotto;
+	}
+	
+	public Prodotto save(Prodotto prodotto) {
+		return this.prodottoRepository.save(prodotto);
+	}
 }
