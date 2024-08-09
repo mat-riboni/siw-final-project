@@ -20,19 +20,13 @@
 <body>
 
 	<header>
-        <button class="btn btn-secondary"><span uk-icon="arrow-left"></span>Indietro</button>
+        <button class="btn btn-secondary" th:onclick="|window.location.href = '/negoziante'|"><span uk-icon="arrow-left"></span>Indietro</button>
 		<div class="center-header">
-            
-			<div>Logo</div>
-			<form class="d-flex" role="search">
-				<input class="form-control me-2" type="search" placeholder="Cerca negozio..." aria-label="Search">
-				<button class="btn btn-success" type="submit"><span uk-icon="search" class="search"></span></button>
-			  </form>
+			<h2 th:text="${nomeNegozio}">
+				Nome Negozio
+			</h2>
 		</div>
-		<div class="user">
-			<div class="benvenuto">Ciao, username!</div>
-			<button class="btn btn-success" type="submit" th:onclick="|window.location.href = '/logout'|">Logout<span uk-icon="sign-out"></span></button>
-		</div>
+		
 	</header>
     <div class="titolo"><h3>Prodotti</h3></div>
     <div class="container">
@@ -48,13 +42,15 @@
 			              </span>
 					  </br><b><span th:text="${prodotto.prezzo}">Prezzo</span>€</b>
 				  </p>
-              	<a th:href="@{/negoziante/prodotto/{id}(id=${prodotto.id})}" class="btn btn-success">Modifica</a>
+              	<a th:if="${isProprietario}" th:href="@{/negoziante/prodotto/{id}(id=${prodotto.id})}" class="btn btn-success">Modifica</a>
+				<a th:unless="${isProprietario}" class="btn btn-success">Prenota</a>
             	</div>
 			</div>
-		</div>	
-    	<button class="nuovo-prodotto" th:onclick="|window.location.href = '/negoziante/prodotto/' + ${prodotto.id}|"><span uk-icon="plus" class="plus"></span>Aggiungi Prodotto</button>
+		</div>
 	</div>
-    </div>
+	<button th:if="${isProprietario}" class="nuovo-prodotto" th:onclick="|window.location.href = '/negoziante/prodotto/nuovo|"><span uk-icon="plus" class="plus"></span>Aggiungi Prodotto</button>
+
+
 
 	<!-- UIkit JS -->
 	<script src="https://cdn.jsdelivr.net/npm/uikit@3.20.10/dist/js/uikit.min.js"></script>
