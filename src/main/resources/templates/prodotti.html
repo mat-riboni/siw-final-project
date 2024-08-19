@@ -45,11 +45,11 @@
 					  </br><b><span th:text="${prodotto.prezzo}">Prezzo</span>€</b>
 				  </p>
               	<a th:if="${isProprietario}" th:href="@{/negoziante/prodotto/{id}(id=${prodotto.id})}" class="btn btn-success">Modifica</a>
-				<a th:unless="${isProprietario}" class="btn btn-success">Aggiungi alla prenotazione</a>
+				<a th:unless="${isProprietario}" class="btn btn-success" data-bs-toggle="modal" th:data-bs-target="'#scegliTaglia' + ${prodotto.id}">Aggiungi alla prenotazione</a>
             	</div>
 			</div>
 			<!--Scegli taglia-->
-			<div class="modal fade" id="scegliTaglia" tabindex="-1" aria-labelledby="scegliTaglia" aria-hidden="true">
+			<div class="modal fade" th:id="'scegliTaglia' + ${prodotto.id}" tabindex="-1" aria-labelledby="scegliTaglia" aria-hidden="true">
 			    <div class="modal-dialog">
 			      <div class="modal-content">
 			        <form>
@@ -58,22 +58,28 @@
 			          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
 			        </div>
 			        <div class="modal-body">
-			            <option class="form-select" th:each="taglia : ${product.taglie}" 
-			                        th:value="${taglia.taglia}" 
-			                        th:text="${taglia.taglia}" 
-			                        th:attr="data-quantity=${taglia.quantita}">
-			            </option></br>
-			            Quantità: <input type="number" id="quantity-input-${prodotto.id}" class="form-control" value="1" min="1">
+							<select th:id="'size-select-' + ${prodotto.id}" class="form-select" aria-label="Taglia">
+					            <option selected th:each="taglia : ${prodotto.taglie}" 
+					                        th:value="${taglia.taglia}" 
+					                        th:text="${taglia.taglia}" 
+					                        th:attr="data-quantity=${taglia.quantita}">
+					            </option>
+							</select>
+			            Quantità: <input type="number" th:id="'quantity-input-' + ${prodotto.id}" class="form-control" value="1" min="1">
 			        </div>
 			        <div class="modal-footer">
 			          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-			          <button type="button" class="btn btn-primary" data-bs-dismiss="modal" th:onclick="|addToCart(
-					          ${prodotto.id}, 
-					          '${prodotto.nome}', 
-					          document.getElementById('size-select-${prodotto.id}').value, 
-					          parseInt(document.getElementById('quantity-input-${prodotto.id}').value),
-					          ${prodotto.prezzo}
-					      )|">Scegli</button>
+					  <button type="button" 
+					          class="btn btn-primary" 
+					          data-bs-dismiss="modal"
+					          th:data-id="${prodotto.id}"
+					          th:data-nome="${prodotto.nome}"
+					          th:data-prezzo="${prodotto.prezzo}"
+					          th:data-size-id="'size-select-' + ${prodotto.id}"
+					          th:data-quantity-id="'quantity-input-' + ${prodotto.id}"
+					          onclick="handleButtonClick(this)">
+					      Scegli
+					  </button>
 			        </div>
 			        </form>
 			      </div>
@@ -100,7 +106,7 @@
 
 
 	<!--Script-->
-	<script th:src="@{/script/prodotti.js}"></script>
+	<script src="/script/prodotti.js"></script>
 	<!-- UIkit JS -->
 	<script src="https://cdn.jsdelivr.net/npm/uikit@3.20.10/dist/js/uikit.min.js"></script>
 	<script src="https://cdn.jsdelivr.net/npm/uikit@3.20.10/dist/js/uikit-icons.min.js"></script>
