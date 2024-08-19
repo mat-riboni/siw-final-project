@@ -34,6 +34,10 @@ public class NegozioService {
 		return this.negozioRepository.findById(id);
 	}
 	
+	public List<Negozio> findByCitta(String citta){
+		return this.negozioRepository.findByCitta(citta);
+	}
+	
 	
 	
 	

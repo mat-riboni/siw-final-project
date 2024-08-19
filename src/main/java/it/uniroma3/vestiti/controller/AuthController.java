@@ -80,7 +80,7 @@ public class AuthController {
 		if(credentials.getRole().equals(Credentials.NEGOZIANTE_ROLE)) {
 			return "redirect:/negoziante";
 		} else {
-			return "userIndex.html";
+			return "redirect:/user";
 		}
 	}
 	
@@ -100,6 +100,9 @@ public class AuthController {
 			model.addAttribute("username", credentials.getUsername());
 			if (credentials.getRole().equals(Credentials.NEGOZIANTE_ROLE)) {
 				return "redirect:/negoziante";
+			}
+			if(credentials.getRole().equals(Credentials.DEFAULT_ROLE)) {
+				return "redirect:/user";
 			}
 		}
         return "index.html";

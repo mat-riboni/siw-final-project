@@ -18,7 +18,7 @@ public class Costanti {
 	public final static String S = "S";
 	public final static String M = "M";
 	public final static String L = "L";
-	public final static String XL = "Xl";
+	public final static String XL = "XL";
 	
 
 	

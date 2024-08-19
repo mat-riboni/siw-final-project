@@ -70,7 +70,7 @@
 				  <div class="card-description">
 					<p th:text="${negozio.descrizione}" class="card-text">Descrizione</p>
 				  </div>
-				  <a href="#" class="btn btn-success">Go somewhere</a>
+				  <a class="btn btn-success" th:href="@{/negozio/{negozioId}/prodotti(negozioId=${negozio.id})}">Visita</a>
 				</div>
 			</div>  
 		</div>

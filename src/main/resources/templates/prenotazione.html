@@ -20,7 +20,7 @@
 <body>
 
 	<header>
-        <button class="btn btn-secondary" th:onclick="|window.location.href = '/negoziante'|"><span uk-icon="arrow-left"></span>Indietro</button>
+        <button class="btn btn-secondary" onclick="window.history.back()"><span uk-icon="arrow-left"></span>Indietro</button>
 		<div class="center-header">
             
 			<span><img class="shop-img" th:src="@{/negozio/copertina/{id}(id=${negozioId})}" alt="copertina"></span>
@@ -30,7 +30,7 @@
 			  </form>
 		</div>
 		<div class="user">
-			<div class="benvenuto">Ciao,&nbsp;<span th:text="${nomeNegoziante}">username</span>!</div>
+			<div class="benvenuto">Ciao,&nbsp;<span th:text="${nome}">username</span>!</div>
 			<button class="btn btn-success" th:onclick="|window.location.href = '/logout'|">Logout<span uk-icon="sign-out"></span></button>
 		</div>
 	</header>
@@ -46,11 +46,12 @@
 				<li class="list-group-item" th:text="${prodotto.nome}">Nome prodotto</li>
 			</div>
             <li class="list-group-item list-group-item-success fine">
-                <button th:if="${prenotazione.stato == 'Annullata' or prenotazione.stato == 'Ritirato'}" class="btn btn-secondary" th:onclick="|window.location.href = '/negoziante'|"><span uk-icon="arrow-left"></span>Indietro</button>
-				<button th:if="${prenotazione.stato == 'In ritiro'}" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#ritirata"><span uk-icon="pull"></span>Ritirata</button>
-				<button th:if="${prenotazione.stato == 'In ritiro'}" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#annulla"><span uk-icon="close"></span>Annulla</button>
-				<button th:if="${prenotazione.stato == 'In attesa'}" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#conferma"><span uk-icon="check"></span>Accetta</button>
-				<button th:if="${prenotazione.stato == 'In attesa'}" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#rifiuta"><span uk-icon="close"></span>Rifiuta</button>
+                <button th:if="${prenotazione.stato == 'Annullata'} or ${prenotazione.stato == 'Ritirato'} or ${!isProprietario}" class="btn btn-secondary" onclick="window.history.back()"><span uk-icon="arrow-left"></span>Indietro</button>
+				<button th:if="${prenotazione.stato == 'In ritiro'} and ${isProprietario}" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#ritirata"><span uk-icon="pull"></span>Ritirata</button>
+				<button th:if="${isProprietario} and ${prenotazione.stato == 'In ritiro'}" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#annulla"><span uk-icon="close"></span>Annulla</button>
+				<button th:if="${isUtente} and ${prenotazione.stato == 'In attesa'} or ${prenotazione.stato == 'In ritiro'}" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#annulla"><span uk-icon="close"></span>Annulla</button>
+				<button th:if="${prenotazione.stato == 'In attesa'} and ${isProprietario}" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#conferma"><span uk-icon="check"></span>Accetta</button>
+				<button th:if="${prenotazione.stato == 'In attesa'} and ${isProprietario}" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#rifiuta"><span uk-icon="close"></span>Rifiuta</button>
             </li>
         </ol>
     </div>

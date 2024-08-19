@@ -20,13 +20,15 @@
 <body>
 
 	<header>
-        <button class="btn btn-secondary" th:onclick="|window.location.href = '/negoziante'|"><span uk-icon="arrow-left"></span>Indietro</button>
+        <button class="btn btn-secondary" onclick="window.history.back()"><span uk-icon="arrow-left"></span>Indietro</button>
 		<div class="center-header">
 			<h2 th:text="${nomeNegozio}">
 				Nome Negozio
 			</h2>
 		</div>
-		
+		<div class="user">
+			<button th:if="${!isProprietario}" class="btn btn-success carrello" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasExample" aria-controls="offcanvasExample"><span uk-icon="cart"></span></button>
+		</div>
 	</header>
     <div class="titolo"><h3>Prodotti</h3></div>
     <div class="container">
@@ -43,15 +45,62 @@
 					  </br><b><span th:text="${prodotto.prezzo}">Prezzo</span>€</b>
 				  </p>
               	<a th:if="${isProprietario}" th:href="@{/negoziante/prodotto/{id}(id=${prodotto.id})}" class="btn btn-success">Modifica</a>
-				<a th:unless="${isProprietario}" class="btn btn-success">Prenota</a>
+				<a th:unless="${isProprietario}" class="btn btn-success">Aggiungi alla prenotazione</a>
             	</div>
 			</div>
+			<!--Scegli taglia-->
+			<div class="modal fade" id="scegliTaglia" tabindex="-1" aria-labelledby="scegliTaglia" aria-hidden="true">
+			    <div class="modal-dialog">
+			      <div class="modal-content">
+			        <form>
+			        <div class="modal-header">
+			          <h1 class="modal-title fs-5" id="exampleModalLabel">Scegli taglia</h1>
+			          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+			        </div>
+			        <div class="modal-body">
+			            <option class="form-select" th:each="taglia : ${product.taglie}" 
+			                        th:value="${taglia.taglia}" 
+			                        th:text="${taglia.taglia}" 
+			                        th:attr="data-quantity=${taglia.quantita}">
+			            </option></br>
+			            Quantità: <input type="number" id="quantity-input-${prodotto.id}" class="form-control" value="1" min="1">
+			        </div>
+			        <div class="modal-footer">
+			          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+			          <button type="button" class="btn btn-primary" data-bs-dismiss="modal" th:onclick="|addToCart(
+					          ${prodotto.id}, 
+					          '${prodotto.nome}', 
+					          document.getElementById('size-select-${prodotto.id}').value, 
+					          parseInt(document.getElementById('quantity-input-${prodotto.id}').value),
+					          ${prodotto.prezzo}
+					      )|">Scegli</button>
+			        </div>
+			        </form>
+			      </div>
+			    </div>
+			  </div>
 		</div>
 	</div>
-	<button th:if="${isProprietario}" class="nuovo-prodotto" th:onclick="|window.location.href = '/negoziante/prodotto/nuovo|"><span uk-icon="plus" class="plus"></span>Aggiungi Prodotto</button>
+	<button th:if="${isProprietario}" class="nuovo-prodotto" th:onclick="|window.location.href = '/negoziante/${negozioId}/prodotto/nuovo'|"><span uk-icon="plus" class="plus"></span>Aggiungi Prodotto</button>
+	
+	<!--off canvas-->
+	<div class="offcanvas offcanvas-start" tabindex="-1" id="offcanvasExample" aria-labelledby="offcanvasExampleLabel">
+	    <div class="offcanvas-header">
+	      <h5 class="offcanvas-title" id="offcanvasExampleLabel">Carrello</h5>
+	      <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+	    </div>
+	    <div class="offcanvas-body">
+	        <ul id="cart-items" class="list-group">
+	        </ul>
+	        <span>Totale: </span><b id="totale">0</b>€
+	        <button class="btn btn-primary mt-3" onclick="checkout()">Effettua Prenotazione</button>
+	    </div>
+	</div>
 
 
 
+	<!--Script-->
+	<script th:src="@{/script/prodotti.js}"></script>
 	<!-- UIkit JS -->
 	<script src="https://cdn.jsdelivr.net/npm/uikit@3.20.10/dist/js/uikit.min.js"></script>
 	<script src="https://cdn.jsdelivr.net/npm/uikit@3.20.10/dist/js/uikit-icons.min.js"></script>

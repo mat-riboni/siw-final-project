@@ -8,7 +8,6 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
-import jakarta.persistence.JoinColumn;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.OneToOne;
 
@@ -25,10 +24,23 @@ public class Utente {
 	
 	private String email;
 	
+	private String citta;
+	
 	@OneToOne(cascade = CascadeType.PERSIST)
 	private Negozio negozio;
 	
+	@OneToMany(mappedBy = "utente", cascade = CascadeType.ALL)
+	private List<Prenotazione> prenotazioni;
 	
+	
+	public List<Prenotazione> getPrenotazioni() {
+		return prenotazioni;
+	}
+
+	public void setPrenotazioni(List<Prenotazione> prenotazioni) {
+		this.prenotazioni = prenotazioni;
+	}
+
 	@Override
 	public int hashCode() {
 		return Objects.hash(email, id);
@@ -80,6 +92,15 @@ public class Utente {
 	public void setEmail(String email) {
 		this.email = email;
 	}
+	
+	public String getCitta() {
+		return citta;
+	}
+
+	public void setCitta(String citta) {
+		this.citta = citta;
+	}
+
 
 	@Override
 	public String toString() {

@@ -11,10 +11,6 @@ header {
     height: 13vh;
 }
 
-.carrello{
-    margin-left: 10px;
-}
-
 .center-header {
     display: flex;
     width: 50%;
@@ -66,47 +62,22 @@ header * {
 }
 
 .container{
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
     width:100%;
+    display: flex;
+    justify-content: center;
     margin-top: 20px;
+    padding: 20px;
 }
 
 .card{
-    margin: 20px;
-}
-
-.card-description{
-    max-height: 40%;
-    overflow-y: hidden;
+    margin-top: 30px;
+    width: 30%;
+    min-height: 350px;
 }
 
 .card-img-top{
-    max-height: 9rem;
+    max-height: 30vh;
     object-fit:cover;
-}
-
-.nuovo-prodotto{
-    position: fixed;
-    bottom: 20px;
-    right: 30px;
-    border-radius: 40px;
-    height: 50px;
-    width:180px;
-    min-width: auto;
-    background-color: rgba(255, 0, 0, 0.428);
-}
-
-.plus{
-    margin-right: 10px;
-}
-
-.modal-body{
-    display: flex;
-    flex-direction: column;
-    width:100%;
-    justify-content: center;
 }
 
 input{
@@ -115,35 +86,6 @@ input{
 label{
     margin-top: 10px;
 }
-
-.info-form{
-    margin-left: 5px;
-    color: rgb(199, 36, 15);
-}
-
-textarea{
-    height: 100px;
-    margin-bottom: 10px;
-}
-
-.taglia{
-    display: flex;
-    align-items: center;
-    width:100%;
-    justify-content: center;
-    margin-top: 10px;
-
-}
-
-.form-check-input{
-    margin-right: 30px;
-}
-
-.form-check-label{
-    margin: 10px;
-    margin-right: 10px;
-}
-
 .quantita{
     width:100px;
     margin-left: 20px;
@@ -152,4 +94,43 @@ textarea{
     width:10%;
     display: flex;
     justify-content: flex-start;
+}
+
+.form-modifica{
+    background-color: rgb(252, 252, 252);
+    margin-left: 20px;
+    padding: 20px;
+    border: 1px solid gray;
+    border-radius: 20px;
+    display: flex;
+    flex-direction: column;
+    width: 40%;
+}
+
+.taglia{
+    display: flex;
+    align-items: center;
+    width:100%;
+    justify-content: center;
+    margin-top: 10px;
+}
+
+.form{
+    display: flex;
+    flex-direction: column;
+    width: 60%;
+}
+
+.input{
+    width:80%;
+}
+
+.modal-footer{
+    width:100%;
+    display: flex;
+    justify-content: flex-end;
+}
+
+.modal-footer > button{
+    margin-right: 20px;
 }

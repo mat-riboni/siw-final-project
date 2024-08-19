@@ -27,8 +27,7 @@ public class Prenotazione {
 	@ManyToOne
 	private Negozio negozio;
 	
-	
-	@ManyToOne(cascade = CascadeType.PERSIST)
+	@ManyToOne
 	private Utente utente;
 	
 	private LocalDateTime dataOra;

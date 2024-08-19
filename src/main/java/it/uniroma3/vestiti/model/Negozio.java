@@ -45,7 +45,7 @@ public class Negozio {
 	@JoinColumn(name = "negozio_id")
 	private List<Recensione> recensioni;
 	
-	@OneToMany(cascade = CascadeType.PERSIST)
+	@OneToMany(cascade = CascadeType.ALL)
 	private List<Prodotto> prodotti;
 	
 	public List<Prodotto> getProdotti() {

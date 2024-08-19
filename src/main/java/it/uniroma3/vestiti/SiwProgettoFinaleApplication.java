@@ -34,6 +34,18 @@ public class SiwProgettoFinaleApplication implements CommandLineRunner{
 	
 	@Override
 	public void run(String... args) throws Exception {
+		Utente normale = new Utente();
+		normale.setNome("utente");
+		normale.setCognome("prova");
+		normale.setEmail("@mail");
+		normale.setCitta(Costanti.cittaDefault);
+		Credentials credentialsUtente = new Credentials();
+		credentialsUtente.setUsername("utenteProva");
+		credentialsUtente.setPassword("12");
+		credentialsUtente.setRole(Credentials.DEFAULT_ROLE);
+		credentialsUtente.setUtente(normale);
+		credentialsService.saveCredentials(credentialsUtente);
+		
 		Utente utente = new Utente();
 		utente.setNome("negoziante");
 		utente.setCognome("prova");
@@ -58,14 +70,13 @@ public class SiwProgettoFinaleApplication implements CommandLineRunner{
     		} else {
     			p.setStato(Costanti.stato_inAttesa);
     		}
-    		p.setUtente(utente);
     		vuoto.getPrenotazioni().add(p);
     		List<Prodotto> prodotti = new ArrayList<>();
     		
     		for(int j = 0; j < 10; j++) {
     			Prodotto prod = new Prodotto();
-    			prod.setNome("Green");
-    			prod.setPrezzo(10);
+    			prod.setNome("Prodotto " + j);
+    			prod.setPrezzo(10*j/2);
     			prod.setNegozio(vuoto);
     			List<Taglia> taglie = new ArrayList<>();
     			
@@ -95,9 +106,7 @@ public class SiwProgettoFinaleApplication implements CommandLineRunner{
     		}
     		vuoto.setProdotti(prodotti);
     		p.setProdotti(prodotti);
-    		Utente ut = new Utente();
-    		ut.setNome("Il grande Mario");
-    		p.setUtente(ut);
+    		p.setUtente(normale);
     		
     	}
     	utente.setNegozio(vuoto);

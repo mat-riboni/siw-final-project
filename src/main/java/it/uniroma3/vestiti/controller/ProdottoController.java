@@ -1,13 +1,11 @@
 package it.uniroma3.vestiti.controller;
 
-import java.io.File;
 import java.io.IOException;
-import java.nio.file.Files;
 
-import org.springframework.core.io.ClassPathResource;
 import org.springframework.core.io.Resource;
 import org.springframework.core.io.ResourceLoader;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -77,6 +75,7 @@ public class ProdottoController {
 		
 		model.addAttribute("prodotti", prodotti);
 		model.addAttribute("nomeNegozio", optionalNegozio.get().getNome());
+		model.addAttribute("negozioId", optionalNegozio.get().getId());
 
 		return "prodotti.html";
 	}
@@ -98,6 +97,31 @@ public class ProdottoController {
 
 		return "prodotto.html";
 	}
+	
+	@GetMapping("/negoziante/{negozioId}/prodotto/nuovo")
+	public String getNuovoProdottoForm(Model model, @PathVariable Long negozioId) {
+		
+		model.addAttribute("negozioId", negozioId);
+		model.addAttribute("nuovo", new Prodotto());
+		
+		return "nuovoProdottoForm.html";
+	}
+	
+	@PostMapping("/negoziante/{negozioId}/prodotto/nuovo")
+	public String nuovoProdotto(@PathVariable Long negozioId,
+							   @ModelAttribute Prodotto nuovo,
+							   @RequestParam(value = "quantitaXS", required = false, defaultValue = "0") int quantitaXS,
+							   @RequestParam(value = "quantitaS", required = false, defaultValue = "0") int quantitaS,
+							   @RequestParam(value = "quantitaM", required = false, defaultValue = "0") int quantitaM,
+							   @RequestParam(value = "quantitaL", required = false, defaultValue = "0") int quantitaL,
+							   @RequestParam(value = "quantitaXL", required = false, defaultValue = "0") int quantitaXL,
+							   @RequestParam("nuovaImmagine") MultipartFile file) {
+		Negozio negozio = this.negozioService.findById(negozioId).get();
+		
+		creaProdotto(nuovo, negozio, quantitaXS, quantitaS, quantitaM, quantitaL, quantitaXL, file);
+		
+		return "redirect:/negozio/" + negozioId + "/prodotti";
+	}
 
 	@PostMapping("/negoziante/prodotto/{id}/modifica")
 	public String modificaProdotto(@PathVariable Long id,
@@ -115,32 +139,40 @@ public class ProdottoController {
 
 		return "redirect:/negozio/" + prodotto.getNegozio().getId() + "/prodotti";
 	}
-
-
+	
 
 	@GetMapping("/prodotto/{prodottoId}/immagine")
 	public ResponseEntity<byte[]> getImmagineProdotto(@PathVariable Long prodottoId){
 
 		Prodotto prodotto = this.prodottoService.findById(prodottoId);
 
-		byte[] immagine = prodotto.getImmagine();
-		String MIMEType = prodotto.getImageMIMEType();
+		return getImmagine(prodotto);
+	}
+	
+	
+	@GetMapping("/prodotto/nuovo/immagine")
+	public ResponseEntity<byte[]> getImmagineDefault(){
+		
+		return getImmagineNonDisponibile();
+	}
+	
+	public void creaProdotto(Prodotto nuovo, Negozio negozio, int quantitaXS, int quantitaS, int quantitaM, int quantitaL, int quantitaXL, MultipartFile file) {
+		
+		negozio.getProdotti().add(nuovo);
+		nuovo.setTaglie(creaTaglie());
+		nuovo.setNegozio(negozio);
+		
+		
+		modificaQuantita(nuovo, quantitaXS, Costanti.XS);
+		modificaQuantita(nuovo, quantitaS, Costanti.S);
+		modificaQuantita(nuovo, quantitaM, Costanti.M);
+		modificaQuantita(nuovo, quantitaL, Costanti.L);
+		modificaQuantita(nuovo, quantitaXL, Costanti.XL);
+		
 
-		if(immagine != null && immagine.length > 0) {
-			HttpHeaders headers = new HttpHeaders();
-			headers.setContentType(MediaType.parseMediaType(MIMEType));
-			return new ResponseEntity<>(immagine, headers, HttpStatus.OK);
-		} else {
-			try {
-				Resource resource = resourceLoader.getResource("classpath:static/images/no-photo-available.jpg");
-				byte[] bytes = resource.getInputStream().readAllBytes();
-				HttpHeaders headers = new HttpHeaders();
-				headers.setContentType(MediaType.IMAGE_JPEG);
-				return new ResponseEntity<>(bytes, headers, HttpStatus.OK);
-			} catch (IOException e) {
-				return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-			}
-		}
+		cambiaImmagineSeValida(nuovo, file); 
+		negozioService.save(negozio);
+
 	}
 
 
@@ -159,14 +191,35 @@ public class ProdottoController {
 		modificaQuantita(prodotto, quantitaL, Costanti.L);
 		modificaQuantita(prodotto, quantitaXL, Costanti.XL);
 		
-		System.out.println("Quantità XS: " + quantitaXS);
-		System.out.println("Quantità S: " + quantitaS);
-		System.out.println("Quantità M: " + quantitaM);
-		System.out.println("Quantità L: " + quantitaL);
-		System.out.println("Quantità XL: " + quantitaXL);
 
 		cambiaImmagineSeValida(prodotto, file); 
 		prodottoService.save(prodotto);
+	}
+	
+	public List<Taglia> creaTaglie(){
+		List<Taglia> taglie = new ArrayList<Taglia>();
+		Taglia xs = new Taglia();
+		xs.setTaglia(Costanti.XS);
+		taglie.add(xs);
+		
+		Taglia s = new Taglia();
+		s.setTaglia(Costanti.S);
+		taglie.add(s);
+		
+		Taglia m = new Taglia();
+		m.setTaglia(Costanti.M);
+		taglie.add(m);
+		
+		Taglia l = new Taglia();
+		l.setTaglia(Costanti.L);
+		taglie.add(l);
+		
+		Taglia xl = new Taglia();
+		xl.setTaglia(Costanti.XL);
+		taglie.add(xl);
+		
+		return taglie;
+		
 	}
 
 	public void modificaQuantita(Prodotto prodotto, int quantita, String nomeTaglia) {
@@ -178,6 +231,33 @@ public class ProdottoController {
 					tagliaRepository.save(t);
 				}
 			}
+		}
+	}
+	
+	public ResponseEntity<byte[]> getImmagine(Prodotto prodotto){
+		byte[] immagine = prodotto.getImmagine();
+		String MIMEType = prodotto.getImageMIMEType();
+
+		if(immagine != null && immagine.length > 0) {
+			HttpHeaders headers = new HttpHeaders();
+			headers.setContentType(MediaType.parseMediaType(MIMEType));
+			return new ResponseEntity<>(immagine, headers, HttpStatus.OK);
+		} else {
+			
+			return getImmagineNonDisponibile();
+			
+		}
+	}
+	
+	public ResponseEntity<byte[]> getImmagineNonDisponibile(){
+		try {
+			Resource resource = resourceLoader.getResource("classpath:static/images/no-photo-available.jpg");
+			byte[] bytes = resource.getInputStream().readAllBytes();
+			HttpHeaders headers = new HttpHeaders();
+			headers.setContentType(MediaType.IMAGE_JPEG);
+			return new ResponseEntity<>(bytes, headers, HttpStatus.OK);
+		} catch (IOException e) {
+			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
 		}
 	}
 

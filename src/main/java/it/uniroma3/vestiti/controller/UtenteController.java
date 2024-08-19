@@ -10,6 +10,9 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import it.uniroma3.vestiti.costanti.Costanti;
 import it.uniroma3.vestiti.model.Credentials;
@@ -17,6 +20,7 @@ import it.uniroma3.vestiti.model.Negozio;
 import it.uniroma3.vestiti.model.Prenotazione;
 import it.uniroma3.vestiti.model.Utente;
 import it.uniroma3.vestiti.service.CredentialsService;
+import it.uniroma3.vestiti.service.NegozioService;
 import it.uniroma3.vestiti.service.PrenotazioneService;
 import it.uniroma3.vestiti.service.UtenteService;
 
@@ -32,10 +36,38 @@ public class UtenteController {
 	@Autowired
 	PrenotazioneService prenotazioneService;
 	
+	@Autowired
+	NegozioService negozioService;
+	
 	
 	@GetMapping("/user")
-	public String getUser() {
+	public String getUser(@RequestParam(value = "citta_cercata", required = false)String citta_cercata, Model model) {
+		
+		UserDetails userDetails = (UserDetails)SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+		Credentials credentials = credentialsService.getCredentialsByUsername(userDetails.getUsername());
+		Utente utente = credentials.getUtente();
+		
+		model.addAttribute("nome", utente.getNome() + " " + utente.getCognome());
+		model.addAttribute("prenotazioni", utente.getPrenotazioni());
+		model.addAttribute("citta", utente.getCitta());
+		model.addAttribute("utente", utente);
+		
+		if (citta_cercata == null || citta_cercata.isBlank()) {
+		    model.addAttribute("citta_cercata", null);
+		    model.addAttribute("negozi", this.negozioService.findByCitta(utente.getCitta()));
+		} else {
+		    model.addAttribute("citta_cercata", citta_cercata);
+		    model.addAttribute("negozi", this.negozioService.findByCitta(citta_cercata));
+		}
+		
+		
 		return "userIndex.html";
+	}
+	
+	@PostMapping("/user/citta")
+	public String getUserCitta(@RequestParam("citta_cercata") String citta_cercata, RedirectAttributes redirectAttributes) {
+	    redirectAttributes.addAttribute("citta_cercata", citta_cercata);
+	    return "redirect:/user";
 	}
 	
 	

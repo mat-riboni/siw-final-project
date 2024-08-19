@@ -12,4 +12,6 @@ public interface NegozioRepository extends CrudRepository<Negozio, Long>{
 	
 	public List<Negozio> findByNome(String nome);
 	
+	public List<Negozio> findByCitta(String citta);
+	
 }
