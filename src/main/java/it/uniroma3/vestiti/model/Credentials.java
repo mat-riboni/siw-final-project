@@ -83,9 +83,4 @@ public class Credentials {
 		Credentials other = (Credentials) obj;
 		return Objects.equals(username, other.username);
 	}
-	
-	
-	
-	
-
 }

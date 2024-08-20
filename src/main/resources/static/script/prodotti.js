@@ -36,7 +36,7 @@ function addToCart(pId, pNome, pTaglia, pQuantita, pPrezzo) {
         cart.push(product);
         updateCartUI();
     } else {
-        alert(`Quantità non disponibile! Solo ${pQuantita} pezzi disponibili per la taglia ${pTaglia}.`);
+        alert('Quantità non disponibile!.');
     }
 }
 
@@ -69,11 +69,29 @@ function checkout() {
         },
         body: JSON.stringify(cart)
     })
-    .then(response => response.json())
+    .then(response => {
+		if (!response.ok) {
+            throw new Error('Errore durante la prenotazione: quantità non sufficienti per uno dei prodotti');
+        }
+		return response.text()
+		})
     .then(data => {
-        alert('Prenotazione effettuata con successo!');
+		appendAlert('Prenotazione effettuata con successo!', 'success')
         cart = [];
         updateCartUI();
     })
-    .catch(error => console.error('Errore durante la prenotazione:', error));
+    .catch(error => appendAlert('Errore durante la prenotazione: quantità non sufficienti per uno dei prodotti', 'danger'));
+}
+
+const alertPlaceholder = document.getElementById('liveAlertPlaceholder')
+const appendAlert = (message, type) => {
+  const wrapper = document.createElement('div')
+  wrapper.innerHTML = [
+    `<div class="alert alert-${type} alert-dismissible" role="alert">`,
+    `   <div>${message}</div>`,
+    '   <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>',
+    '</div>'
+  ].join('')
+
+  alertPlaceholder.append(wrapper)
 }

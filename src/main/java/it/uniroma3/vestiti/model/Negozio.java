@@ -39,10 +39,7 @@ public class Negozio {
 	
 	@OneToMany(cascade = CascadeType.PERSIST)
 	private List<Prenotazione> prenotazioni;
-	
-	@OneToMany
-	@JoinColumn(name = "negozio_id")
-	private List<Recensione> recensioni;
+
 	
 	@OneToMany(cascade = CascadeType.ALL)
 	private List<Prodotto> prodotti;
@@ -86,13 +83,6 @@ public class Negozio {
 		this.immagine = immagine;
 	}
 
-	public List<Recensione> getRecensioni() {
-		return recensioni;
-	}
-
-	public void setRecensioni(List<Recensione> recensioni) {
-		this.recensioni = recensioni;
-	}
 
 	public void setCitta(String citta) {
 		this.citta = citta;

@@ -18,7 +18,6 @@
 
 </head>
 <body>
-
 	<header>
         <button class="btn btn-secondary" onclick="window.history.back()"><span uk-icon="arrow-left"></span>Indietro</button>
 		<div class="center-header">
@@ -30,6 +29,7 @@
 			<button th:if="${!isProprietario}" class="btn btn-success carrello" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasExample" aria-controls="offcanvasExample"><span uk-icon="cart"></span></button>
 		</div>
 	</header>
+	<div id="liveAlertPlaceholder"></div>
     <div class="titolo"><h3>Prodotti</h3></div>
     <div class="container">
 		
@@ -99,7 +99,7 @@
 	        <ul id="cart-items" class="list-group">
 	        </ul>
 	        <span>Totale: </span><b id="totale">0</b>€
-	        <button class="btn btn-primary mt-3" onclick="checkout()">Effettua Prenotazione</button>
+	        <button class="btn btn-primary mt-3" onclick="checkout()" data-bs-toggle="offcanvas" data-bs-target="#offcanvasExample">Effettua Prenotazione</button>
 	    </div>
 	</div>
 

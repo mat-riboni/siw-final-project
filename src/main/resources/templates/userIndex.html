@@ -33,6 +33,7 @@
 		<div class="user">
 			<div class="benvenuto">Ciao, <span th:text="${nome}">Nome</span>!</div>
 			<button class="btn btn-success" type="button" th:onclick="|window.location.href = '/logout'|">Logout<span uk-icon="sign-out"></span></button>
+			<button class="btn btn-light settings" type="button" th:onclick="|window.location.href = '/user/' + ${utente.id} + '/profilo'|"><span uk-icon="settings"></button>
 		</div>
 	</header>
 	<!--Start off-canvas-->

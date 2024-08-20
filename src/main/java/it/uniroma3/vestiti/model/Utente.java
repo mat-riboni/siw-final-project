@@ -1,13 +1,17 @@
 package it.uniroma3.vestiti.model;
 
+import java.sql.Types;
 import java.util.List;
 import java.util.Objects;
+
+import org.hibernate.annotations.JdbcTypeCode;
 
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.Lob;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.OneToOne;
 
@@ -26,13 +30,45 @@ public class Utente {
 	
 	private String citta;
 	
+	private String indirizzo;
+	
+	public String getIndirizzo() {
+		return indirizzo;
+	}
+
+	public void setIndirizzo(String indirizzo) {
+		this.indirizzo = indirizzo;
+	}
+
+
 	@OneToOne(cascade = CascadeType.PERSIST)
 	private Negozio negozio;
 	
 	@OneToMany(mappedBy = "utente", cascade = CascadeType.ALL)
 	private List<Prenotazione> prenotazioni;
 	
+	@Lob
+	@JdbcTypeCode(Types.VARBINARY)
+	private byte[] immagine;
 	
+	private String imageMIMEType;
+	
+	public byte[] getImmagine() {
+		return immagine;
+	}
+
+	public void setImmagine(byte[] immagine) {
+		this.immagine = immagine;
+	}
+
+	public String getImageMIMEType() {
+		return imageMIMEType;
+	}
+
+	public void setImageMIMEType(String imageMIMEType) {
+		this.imageMIMEType = imageMIMEType;
+	}
+
 	public List<Prenotazione> getPrenotazioni() {
 		return prenotazioni;
 	}
@@ -106,8 +142,6 @@ public class Utente {
 	public String toString() {
 		return "Utente [id=" + id + ", nome=" + nome + ", cognome=" + cognome + ", email=" + email + "]";
 	}
-	
-	
 	
 	
 }

@@ -1,0 +1,71 @@
+body {
+    background: rgb(143, 202, 119);
+    min-height: 100vh;
+}
+
+.form-control:focus {
+    box-shadow: none;
+    border-color: #29721f
+}
+
+
+
+.labels {
+    font-size: 11px
+}
+
+header {
+    background-color: rgb(249, 249, 249);
+    display: flex;
+    justify-content: center;
+    width: 100%;
+    justify-content: space-between;
+    padding: 0 30px;
+    align-items: center;
+    height: 10vh;
+}
+
+.center-header {
+    display: flex;
+    width: 50%;
+    height: 70%;
+    background-color: rgb(250, 250, 250);
+    align-items: center;
+    justify-content: space-around;
+    border-radius: 30px;
+    margin: 0 10%;
+    border: 1px solid rgb(219, 219, 219);
+}
+
+header * {
+    display: inline;
+}
+
+.btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 35px;
+}
+
+.me-2 {
+    width: 30vw;
+}
+
+.user {
+    display: flex;
+    align-items: center;
+}
+
+.benvenuto {
+    margin-right: 20px;
+}
+
+.vuoto{
+    color: transparent;
+}
+
+.mb-3{
+    margin-top: 20px;    
+}
+

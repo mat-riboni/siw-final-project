@@ -43,13 +43,20 @@
 				<span class="badge text-bg-dark" th:if="${prenotazione.stato == 'Annullata'}" th:text="${prenotazione.stato}">Stato</span>
             </li>
 			<div th:each="prodotto : ${prodotti}">
-				<li class="list-group-item" th:text="${prodotto.nome}">Nome prodotto</li>
+				<li class="list-group-item">
+					<span th:text="${prodotto.nome}">Nome, <span th:each="taglia : ${prodotto.taglie}">
+						<span th:text="${taglia.taglia}">Taglia</span>, 
+						<span th:text="${taglia.quantita}">Quantita</span>
+					</span></span>
+				</li>
 			</div>
+			<li class="list-group-item">Totale dovuto: <b th:text="${totale}">Totale</b>€</li>
             <li class="list-group-item list-group-item-success fine">
                 <button th:if="${prenotazione.stato == 'Annullata'} or ${prenotazione.stato == 'Ritirato'} or ${!isProprietario}" class="btn btn-secondary" onclick="window.history.back()"><span uk-icon="arrow-left"></span>Indietro</button>
 				<button th:if="${prenotazione.stato == 'In ritiro'} and ${isProprietario}" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#ritirata"><span uk-icon="pull"></span>Ritirata</button>
 				<button th:if="${isProprietario} and ${prenotazione.stato == 'In ritiro'}" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#annulla"><span uk-icon="close"></span>Annulla</button>
-				<button th:if="${isUtente} and ${prenotazione.stato == 'In attesa'} or ${prenotazione.stato == 'In ritiro'}" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#annulla"><span uk-icon="close"></span>Annulla</button>
+				<button th:if="${isUtente} and ${prenotazione.stato == 'In attesa'}" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#annulla"><span uk-icon="close"></span>Annulla</button>
+				<button th:if="${isUtente} and ${prenotazione.stato == 'In ritiro'}" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#annulla"><span uk-icon="close"></span>Annulla</button>
 				<button th:if="${prenotazione.stato == 'In attesa'} and ${isProprietario}" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#conferma"><span uk-icon="check"></span>Accetta</button>
 				<button th:if="${prenotazione.stato == 'In attesa'} and ${isProprietario}" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#rifiuta"><span uk-icon="close"></span>Rifiuta</button>
             </li>
