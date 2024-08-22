@@ -96,6 +96,8 @@ public class PrenotazioneController {
 			@RequestParam("stato") String stato) {
 
 		Optional<Prenotazione> optionalPenotazione = this.prenotazioneService.findById(id);
+		
+		
 
 		optionalPenotazione.ifPresent(prenotazione -> {
 			prenotazione.setStato(stato);

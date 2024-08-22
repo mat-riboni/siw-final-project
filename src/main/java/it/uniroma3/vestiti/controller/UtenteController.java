@@ -17,9 +17,11 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import it.uniroma3.vestiti.costanti.Costanti;
@@ -120,6 +122,8 @@ public class UtenteController {
 
 		model.addAttribute("utente", utente);
 		model.addAttribute("username", userDetails.getUsername());
+		model.addAttribute("modificato", new Utente());
+		model.addAttribute("nuovoUsername", new String());
 
 		return "userProfile.html";
 	}
@@ -129,6 +133,16 @@ public class UtenteController {
 		Utente utente = this.utenteService.getUtenteById(id);
 
 		return getImmagine(utente);
+	}
+	
+	@PostMapping("/user/{id}/modifica")
+	public String modificaInfoUtente(@PathVariable Long id,
+									 @ModelAttribute("utente") Utente utente,
+									 @RequestParam("immagineModificata")MultipartFile file) {
+		
+		modificaImmagineSePresente(file, utente);
+		this.utenteService.saveUtente(utente);
+		return "redirect:/user/" + id + "/profilo";
 	}
 
 	public ResponseEntity<byte[]> getImmagine(Utente utente){
@@ -156,6 +170,19 @@ public class UtenteController {
 		} catch (IOException e) {
 			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
 		}
+	}
+	
+	public void modificaImmagineSePresente(MultipartFile file, Utente utente) {
+		if (!file.isEmpty() && file!= null) {
+            try {
+                byte[] bytes = file.getBytes();
+                String MIMEType = file.getContentType();
+                utente.setImmagine(bytes);
+                utente.setImageMIMEType(MIMEType);
+            } catch (IOException e) {
+                System.out.println("Immagine non caricata");
+            }
+        }
 	}
 
 }

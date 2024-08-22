@@ -65,11 +65,14 @@ public class ProdottoController {
 		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
 		if (authentication instanceof AnonymousAuthenticationToken) {
 			model.addAttribute("isProprietario", false);
+			model.addAttribute("isLogged", false);
 		} else{
 			if(isPropietarioNegozio(optionalNegozio.get().getProprietario().getId())) {
 				model.addAttribute("isProprietario", true);
+				model.addAttribute("isLogged", true);
 			} else {
 				model.addAttribute("isProprietario", false);
+				model.addAttribute("isLogged", true);
 			}
 		}
 		

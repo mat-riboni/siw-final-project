@@ -10,6 +10,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -22,6 +23,7 @@ import it.uniroma3.vestiti.model.Prenotazione;
 import it.uniroma3.vestiti.model.Utente;
 import it.uniroma3.vestiti.service.CredentialsService;
 import it.uniroma3.vestiti.service.NegozioService;
+import jakarta.validation.Valid;
 
 @Controller
 public class AuthController {
@@ -45,9 +47,19 @@ public class AuthController {
 	
 	@PostMapping("/register")
 	public String registerUtente(
-			@ModelAttribute("utente") Utente utente, 
-			@ModelAttribute("credentials") Credentials credentials,
-			@RequestParam(value = "negoziante", required = false) String negoziante) {
+			@Valid @ModelAttribute("utente") Utente utente, 
+			BindingResult bindingResultUtente,
+			@Valid@ModelAttribute("credentials") Credentials credentials,
+			BindingResult bindingResultCredentials,
+			@RequestParam(value = "negoziante", required = false) String negoziante,
+			Model model) {
+				
+				if(bindingResultUtente.hasErrors() || bindingResultCredentials.hasErrors()) {
+					model.addAttribute("utente", new Utente());
+					model.addAttribute("credentials", new Credentials());
+					return "registrationForm.html";
+				}
+				
 	            if(negoziante == null) {
 	            	credentials.setRole(Credentials.DEFAULT_ROLE);
 	            } else {

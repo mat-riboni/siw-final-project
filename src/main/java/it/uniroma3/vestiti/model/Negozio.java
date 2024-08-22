@@ -12,10 +12,10 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
-import jakarta.persistence.JoinColumn;
 import jakarta.persistence.Lob;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.OneToOne;
+import jakarta.validation.constraints.NotBlank;
 
 @Entity
 public class Negozio {
@@ -24,6 +24,7 @@ public class Negozio {
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Long id;
 	
+	@NotBlank
 	@Column(nullable = false, unique = true)
 	private String nome;
 	
@@ -35,6 +36,7 @@ public class Negozio {
 	
 	private String indirizzo;
 	
+	@NotBlank
 	private String citta;
 	
 	@OneToMany(cascade = CascadeType.PERSIST)

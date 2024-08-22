@@ -20,6 +20,7 @@ public class Costanti {
 	public final static String L = "L";
 	public final static String XL = "XL";
 	
+	
 
 	
 }

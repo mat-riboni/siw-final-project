@@ -2,7 +2,7 @@
 <html>
 <head>
 <meta charset="ISO-8859-1">
-<title>Regtistrati</title>
+<title>Registrati</title>
 
 <!--CSS-->
 <link rel="stylesheet" type="text/css" href="CSS/register.css">
@@ -23,10 +23,15 @@
         
         <form class="form" th:action="@{/register}" method="post" enctype="multipart/form-data">
           <input type="text" placeholder="Email" th:field ="${utente.email}"/>
+		  <span th:if="${#fields.hasErrors('utente.email')}" th:text="${#fields.errors('utente.email')}">Errore</span>
           <input type="text" placeholder="Nome" th:field="${utente.nome}"/>
+		  <span th:if="${#fields.hasErrors('utente.nome')}" th:text="${#fields.errors('utente.nome')}"></span>
           <input type="text" placeholder="Cognome" th:field="${utente.cognome}"/>
+		  <span th:if="${#fields.hasErrors('utente.cognome')}" th:text="${#fields.errors('utente.cognome')}"></span>
           <input type="text" placeholder="Username" th:field="${credentials.username}"/>
+		  <span th:if="${#fields.hasErrors('credentials.username')}" th:text="${#fields.errors('credentials.username')}"></span>
           <input type="password" placeholder="Password" th:field="${credentials.password}"/>
+		  <span th:if="${#fields.hasErrors('credentials.password')}" th:text="${#fields.errors('credentials.password')}"></span>
           <span><input type="checkbox" name="negoziante" value="negoziante">
                 <label for="negoziante"> Sono un negoziante</label>
           </span>

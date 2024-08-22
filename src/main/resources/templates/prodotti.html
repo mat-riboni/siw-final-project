@@ -19,14 +19,14 @@
 </head>
 <body>
 	<header>
-        <button class="btn btn-secondary" onclick="window.history.back()"><span uk-icon="arrow-left"></span>Indietro</button>
+        <button class="btn btn-secondary" th:onclick="|window.location.href = '/'|"><span uk-icon="arrow-left"></span>Home</button>
 		<div class="center-header">
 			<h2 th:text="${nomeNegozio}">
 				Nome Negozio
 			</h2>
 		</div>
 		<div class="user">
-			<button th:if="${!isProprietario}" class="btn btn-success carrello" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasExample" aria-controls="offcanvasExample"><span uk-icon="cart"></span></button>
+			<button th:if="${!isProprietario && isLogged}" class="btn btn-success carrello" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasExample" aria-controls="offcanvasExample"><span uk-icon="cart"></span></button>
 		</div>
 	</header>
 	<div id="liveAlertPlaceholder"></div>
@@ -45,7 +45,8 @@
 					  </br><b><span th:text="${prodotto.prezzo}">Prezzo</span>€</b>
 				  </p>
               	<a th:if="${isProprietario}" th:href="@{/negoziante/prodotto/{id}(id=${prodotto.id})}" class="btn btn-success">Modifica</a>
-				<a th:unless="${isProprietario}" class="btn btn-success" data-bs-toggle="modal" th:data-bs-target="'#scegliTaglia' + ${prodotto.id}">Aggiungi alla prenotazione</a>
+				<a th:if="${!isProprietario && isLogged}" class="btn btn-success" data-bs-toggle="modal" th:data-bs-target="'#scegliTaglia' + ${prodotto.id}">Aggiungi alla prenotazione</a>
+				<a th:if="${!isLogged}" href="/login" class="btn btn-success">Accedi per poter prenotare</a>
             	</div>
 			</div>
 			<!--Scegli taglia-->
