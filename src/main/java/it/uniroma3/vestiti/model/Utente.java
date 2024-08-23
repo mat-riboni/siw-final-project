@@ -23,7 +23,7 @@ public class Utente {
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Long id;
 	
-	@NotBlank
+	@NotBlank(message = "{NotBlank}")
 	private String nome;
 	
 	@NotBlank

@@ -20,6 +20,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -36,6 +37,7 @@ import it.uniroma3.vestiti.repository.TagliaRepository;
 import it.uniroma3.vestiti.service.CredentialsService;
 import it.uniroma3.vestiti.service.NegozioService;
 import it.uniroma3.vestiti.service.ProdottoService;
+import jakarta.validation.Valid;
 
 @Controller
 public class ProdottoController {
@@ -112,15 +114,23 @@ public class ProdottoController {
 	
 	@PostMapping("/negoziante/{negozioId}/prodotto/nuovo")
 	public String nuovoProdotto(@PathVariable Long negozioId,
-							   @ModelAttribute Prodotto nuovo,
+							   @Valid @ModelAttribute Prodotto nuovo,
+							   BindingResult bindingResult,
 							   @RequestParam(value = "quantitaXS", required = false, defaultValue = "0") int quantitaXS,
 							   @RequestParam(value = "quantitaS", required = false, defaultValue = "0") int quantitaS,
 							   @RequestParam(value = "quantitaM", required = false, defaultValue = "0") int quantitaM,
 							   @RequestParam(value = "quantitaL", required = false, defaultValue = "0") int quantitaL,
 							   @RequestParam(value = "quantitaXL", required = false, defaultValue = "0") int quantitaXL,
-							   @RequestParam("nuovaImmagine") MultipartFile file) {
-		Negozio negozio = this.negozioService.findById(negozioId).get();
+							   @RequestParam("nuovaImmagine") MultipartFile file,
+							   Model model) {
 		
+		if(bindingResult.hasErrors()) {
+			model.addAttribute("negozioId", negozioId);
+			model.addAttribute("nuovo", new Prodotto());
+			return "nuovoProdottoForm";
+		}
+		
+		Negozio negozio = this.negozioService.findById(negozioId).get();
 		creaProdotto(nuovo, negozio, quantitaXS, quantitaS, quantitaM, quantitaL, quantitaXL, file);
 		
 		return "redirect:/negozio/" + negozioId + "/prodotti";
@@ -128,14 +138,30 @@ public class ProdottoController {
 
 	@PostMapping("/negoziante/prodotto/{id}/modifica")
 	public String modificaProdotto(@PathVariable Long id,
-			@ModelAttribute("modificato") Prodotto modificato,
+			@Valid @ModelAttribute("modificato") Prodotto modificato,
+			BindingResult bindingResult,
 			@RequestParam(value = "quantitaXS", required = false, defaultValue = "-1") int quantitaXS,
 			@RequestParam(value = "quantitaS", required = false, defaultValue = "-1") int quantitaS,
 			@RequestParam(value = "quantitaM", required = false, defaultValue = "-1") int quantitaM,
 			@RequestParam(value = "quantitaL", required = false, defaultValue = "-1") int quantitaL,
 			@RequestParam(value = "quantitaXL", required = false, defaultValue = "-1") int quantitaXL,
-			@RequestParam("immagineModificata") MultipartFile file) {
+			@RequestParam("immagineModificata") MultipartFile file,
+			Model model) {
 
+		if(bindingResult.hasErrors()) {
+			bindingResult.getAllErrors().forEach(error -> System.out.println(error.toString()));
+			Prodotto prodotto = this.prodottoService.findById(id);
+			Long negozioId = prodotto.getNegozio().getId();
+			model.addAttribute("prodotto", prodotto);
+			model.addAttribute("quantitaXS", new String());
+			model.addAttribute("quantitaS", new String());
+			model.addAttribute("quantitaM", new String());
+			model.addAttribute("quantitaL", new String());
+			model.addAttribute("quantitaXL", new String());
+			model.addAttribute("negozioId", negozioId);
+			return "prodotto.html";
+		}
+		
 		Prodotto prodotto = this.prodottoService.findById(id);
 
 		aggiornaProdotto(prodotto, modificato, quantitaXS, quantitaS, quantitaM, quantitaL, quantitaXL, file);

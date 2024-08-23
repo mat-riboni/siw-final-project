@@ -7,7 +7,6 @@ import java.util.Objects;
 import org.hibernate.annotations.JdbcTypeCode;
 
 import jakarta.persistence.CascadeType;
-import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -27,12 +26,10 @@ public class Prodotto {
 	private Long id;
 	
 	@NotBlank
-	@Column(nullable = false)
 	private String nome;
 	
-	@NotNull
 	@Min(value=0)
-	@Column(nullable = false)
+	@NotNull
 	private float prezzo;
 	
 	@OneToMany(cascade = CascadeType.ALL)

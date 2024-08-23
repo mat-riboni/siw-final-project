@@ -220,11 +220,14 @@ textarea{
     padding-right: 15px; 
 }
 
-/* Nasconde la scrollbar su Chrome e Safari */
 .uk-switcher .list-group::-webkit-scrollbar {
     display: none;
 }
 
+.error{
+	color: rgb(183, 0, 0);
+	font-size: small;
+}
 /* Nasconde la scrollbar su Firefox */
 .uk-switcher .list-group {
     scrollbar-width: none;

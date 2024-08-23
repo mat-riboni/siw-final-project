@@ -49,9 +49,11 @@
         <div class="form-modifica">
             <form class="form" th:action="@{/negoziante/{id}/prodotto/nuovo(id=${negozioId})}" method="post" enctype="multipart/form-data">
                 <h3>Crea</h3>
-                        
+                 
+				<span class="error" th:if="${#fields.hasErrors('nuovo.nome')}" th:errors="${nuovo.nome}"></span>
                 <label for="nome">Nome:</label>
                 <input type="text" name="nome" placeholder="Nome" th:field ="${nuovo.nome}" required/>
+				<span class="error" th:if="${#fields.hasErrors('nuovo.prezzo')}" th:errors="${nuovo.prezzo}"></span>
                 <label for="prezzo">Prezzo:</label>
                 <input type="text" name="prezzo" placeholder="Prezzo" th:field="${nuovo.prezzo}" required/>
                             

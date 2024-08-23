@@ -55,8 +55,6 @@ public class AuthController {
 			Model model) {
 				
 				if(bindingResultUtente.hasErrors() || bindingResultCredentials.hasErrors()) {
-					model.addAttribute("utente", new Utente());
-					model.addAttribute("credentials", new Credentials());
 					return "registrationForm.html";
 				}
 				

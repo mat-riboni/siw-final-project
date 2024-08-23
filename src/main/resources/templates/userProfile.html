@@ -36,10 +36,12 @@
 			    </div>
 			    <div class="row mt-2">
 			        <div class="col-md-6">
+						<span class="error" th:if="${#fields.hasErrors('nome')}" th:errors="*{nome}"></span>
 			            <label class="labels">Nome</label>
 			            <input name="nome" type="text" class="form-control" placeholder="Nome" th:field="*{nome}" />
 			        </div>
 			        <div class="col-md-6">
+						<span class="error" th:if="${#fields.hasErrors('cognome')}" th:errors="*{cognome}"></span>
 			            <label class="labels">Cognome</label>
 			            <input name="cognome" type="text" class="form-control" placeholder="Cognome" th:field="*{cognome}" />
 			        </div>
@@ -50,6 +52,7 @@
 			            <input name="username" type="text" class="form-control" placeholder="Username" th:field="${username}" />
 			        </div>
 			        <div class="col-md-12">
+						<span class="error" th:if="${#fields.hasErrors('email')}" th:errors="*{email}"></span>
 			            <label class="labels">Email</label>
 			            <input name="email" type="text" class="form-control" placeholder="Email" th:field="*{email}" />
 			        </div>

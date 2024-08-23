@@ -98,8 +98,10 @@
 				
 				<input type="hidden" name="id" th:value="${negozio.id}" />
 					
+					<span class="error" th:if="${#fields.hasErrors('nome')}" th:errors="*{nome}"></span>
 					<label for="nome">Nome:</label>
 					<input type="text" placeholder="Nome" th:field ="${negozioNuovo.nome}"/>
+					<span class="error" th:if="${#fields.hasErrors('citta')}" th:errors="*{citta}"></span>
 					<label for="citta">Città:</label>
 					<input type="text"  placeholder="Città" th:field="${negozioNuovo.citta}"/>
 					<label for="indirizzo">Indirizzo:</label>

@@ -16,6 +16,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -33,6 +34,7 @@ import it.uniroma3.vestiti.service.CredentialsService;
 import it.uniroma3.vestiti.service.NegozioService;
 import it.uniroma3.vestiti.service.PrenotazioneService;
 import it.uniroma3.vestiti.service.UtenteService;
+import jakarta.validation.Valid;
 
 @Controller
 public class UtenteController {
@@ -137,8 +139,20 @@ public class UtenteController {
 	
 	@PostMapping("/user/{id}/modifica")
 	public String modificaInfoUtente(@PathVariable Long id,
-									 @ModelAttribute("utente") Utente utente,
-									 @RequestParam("immagineModificata")MultipartFile file) {
+									 @Valid @ModelAttribute("utente") Utente utente,
+									 BindingResult bindingResult,
+									 @RequestParam("immagineModificata")MultipartFile file,
+									 Model model) {
+		
+		if(bindingResult.hasErrors()) {
+			UserDetails userDetails = (UserDetails)SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+
+			model.addAttribute("username", userDetails.getUsername());
+			model.addAttribute("modificato", new Utente());
+			model.addAttribute("nuovoUsername", new String());
+
+			return "userProfile.html";
+		}
 		
 		modificaImmagineSePresente(file, utente);
 		this.utenteService.saveUtente(utente);

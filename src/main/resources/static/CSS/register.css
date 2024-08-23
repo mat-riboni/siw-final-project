@@ -62,3 +62,8 @@ button:hover{
     display: flex;
     justify-content: space-around;
 }
+
+.error{
+	color: rgb(183, 0, 0);
+	font-size: small;
+}

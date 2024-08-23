@@ -44,13 +44,15 @@
             </div>
         </div>
         <div class="form-modifica">
-            <form class="form" th:action="@{/negoziante/prodotto/{id}/modifica(id=${prodotto.id})}" method="post" enctype="multipart/form-data">
+            <form class="form" th:object="${modificato}" th:action="@{/negoziante/prodotto/{id}/modifica(id=${prodotto.id})}" method="post" enctype="multipart/form-data">
                 <h3>Modifica</h3>
-                        
-                <label for="nome">Nome:</label>
-                <input type="text" name="nome" placeholder="Nome" th:field ="${modificato.nome}"/>
-                <label for="prezzo">Prezzo:</label>
-                <input type="text" name="prezzo" placeholder="Prezzo" th:field="${modificato.prezzo}"/>
+				<span class="error" th:if="${#fields.hasErrors('nome')}" th:errors="*{nome}"></span>
+				<label for="nome">Nome:</label>
+				<input type="text" placeholder="Nome" th:field ="${modificato.nome}"/>
+				
+				<span class="error" th:if="${#fields.hasErrors('prezzo')}" th:errors="*{prezzo}"></span>
+				<label for="prezzo">Prezzo:</label>
+				<input type="text" placeholder="Prezzo" th:field="${modificato.prezzo}"/>
                             
                 <div class="taglie">
                     <div class="taglia">
@@ -85,7 +87,7 @@
                          <div class="etichetta">
                             <label for="quantita">XL</label>
                         </div>
-                        <input type="number" name="qunatitaXL" class="quantita" placeholder="Quantità" min="0"></input>
+                        <input type="number" name="quantitaXL" class="quantita" placeholder="Quantità" min="0"></input>
                     </div>
                 </div>
         
