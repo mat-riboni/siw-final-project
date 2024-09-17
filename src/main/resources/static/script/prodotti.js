@@ -4,6 +4,7 @@ let cart = [];
    		const id = button.dataset.id;
         const nome = button.dataset.nome;
         const prezzo = button.dataset.prezzo;
+        const negozioId = button.dataset.negozioId;
         
         const sizeSelectId = button.dataset.sizeId;
         const quantityInputId = button.dataset.quantityId;
@@ -14,19 +15,20 @@ let cart = [];
         if (sizeSelect && quantityInput) {
             const size = sizeSelect.value;
             const quantity = parseInt(quantityInput.value, 10);
-            addToCart(id, nome, size, quantity, prezzo);
+            addToCart(id, nome, size, quantity, prezzo, negozioId);
         } else {
         	console.error('Elementi non trovati:', sizeSelectId, quantityInputId);
 		}
     }
 
-function addToCart(pId, pNome, pTaglia, pQuantita, pPrezzo) {
+function addToCart(pId, pNome, pTaglia, pQuantita, pPrezzo, pNegozioId) {
     const sizeSelect = document.getElementById(`size-select-${pId}`);
     const selectedOption = sizeSelect.querySelector(`option[value="${pTaglia}"]`);
     const availableQuantity = parseInt(selectedOption.getAttribute('data-quantity'));
 
     if (availableQuantity >= pQuantita) {
         const product = {
+			negozioId: pNegozioId,
             id: pId,
             nome: pNome,
             taglia: pTaglia,

@@ -96,14 +96,6 @@ public class UtenteController {
 		List<Prenotazione> prenotazioni = negozio.getPrenotazioni();
 		List<Prenotazione> inAttesa = this.prenotazioneService.findPrenotazioniByStatoPerNegozio(negozio.getId(), Costanti.stato_inAttesa);
 		List<Prenotazione> ritirate = this.prenotazioneService.findPrenotazioniByStatoPerNegozio(negozio.getId(), Costanti.stato_ritirato);
-		Collections.sort(prenotazioni, new Comparator<>() {
-
-			@Override
-			public int compare(Prenotazione o1, Prenotazione o2) {
-				return o1.getDataOra().compareTo(o2.getDataOra());
-			}
-
-		});
 
 		model.addAttribute("negozio", negozio);
 		model.addAttribute("nome", negoziante.getNome() + " " + negoziante.getCognome());

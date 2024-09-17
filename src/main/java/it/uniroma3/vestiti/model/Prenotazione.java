@@ -24,7 +24,7 @@ public class Prenotazione {
 	@JoinColumn(name = "prenotazione_id")
 	private List<Prodotto> prodotti;
 	
-	@ManyToOne
+	@ManyToOne(cascade = CascadeType.ALL)
 	private Negozio negozio;
 	
 	@ManyToOne

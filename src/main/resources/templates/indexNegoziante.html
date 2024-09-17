@@ -71,7 +71,7 @@
 						<span th:text="${prenotazione.utente.nome}">Nome</span>
 						<span th:text="${prenotazione.utente.cognome}"> Cognome</span>
 					</div>
-						<span th:text="${#temporals.format(prenotazione.dataOra, 'dd/MM/yyyy')}">19/05/2000 </span> | 12 articoli
+						<span th:text="${#temporals.format(prenotazione.dataOra, 'dd/MM/yyyy')}">19/05/2000 </span>
 					</div>
 					<span class="badge text-bg-danger" th:if="${prenotazione.stato == 'In attesa'}" th:text="${prenotazione.stato}">Stato</span>
 					<span class="badge text-bg-success" th:if="${prenotazione.stato == 'Ritirato'}" th:text="${prenotazione.stato}">Stato</span>

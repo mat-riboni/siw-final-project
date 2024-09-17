@@ -6,6 +6,8 @@ public class ProdottoCarrello {
 
 	private Long id;
 	
+	private Long negozioId;
+
 	private String nome;
 	
 	private float prezzo;
@@ -59,6 +61,14 @@ public class ProdottoCarrello {
 		return Objects.hash(id, nome, prezzo, quantita, taglia);
 	}
 
+	
+	public Long getNegozioId() {
+		return negozioId;
+	}
+
+	public void setNegozioId(Long negozioId) {
+		this.negozioId = negozioId;
+	}
 	@Override
 	public boolean equals(Object obj) {
 		if (this == obj)

@@ -28,6 +28,7 @@ import it.uniroma3.vestiti.model.ProdottoCarrello;
 import it.uniroma3.vestiti.model.Taglia;
 import it.uniroma3.vestiti.model.Utente;
 import it.uniroma3.vestiti.service.CredentialsService;
+import it.uniroma3.vestiti.service.NegozioService;
 import it.uniroma3.vestiti.service.PrenotazioneService;
 import it.uniroma3.vestiti.service.ProdottoService;
 
@@ -43,6 +44,9 @@ public class PrenotazioneController {
 
 	@Autowired
 	CredentialsService credentialsService;
+	
+	@Autowired
+	NegozioService negozioService;
 
 	@GetMapping("/prenotazione/{id}")
 	public String getPrenotazione(Model model, @PathVariable Long id) {
@@ -126,7 +130,7 @@ public class PrenotazioneController {
 	private boolean trasformaRispostaInPrenotazione(List<ProdottoCarrello> cart) {
 		List<Prodotto> prodotti = new ArrayList<>();
 
-		Negozio negozio = null;
+		Negozio negozio = this.negozioService.findById(cart.get(0).getNegozioId()).get();
 		
 		for (ProdottoCarrello p : cart) {
 			Prodotto prodotto = this.prodottoService.findById(p.getId());
@@ -195,8 +199,9 @@ public class PrenotazioneController {
 			prenotazione.setUtente(utente);
 			prenotazione.setStato(Costanti.stato_inAttesa);
 			prenotazione.setDataOra(LocalDateTime.now());
-
+			negozio.getPrenotazioni().add(prenotazione);
 			this.prenotazioneService.save(prenotazione);
+			negozioService.save(negozio);
 
 		}
 
