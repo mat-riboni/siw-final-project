@@ -139,3 +139,7 @@ header * {
 .btn-container > button{
 	margin: 0 3px;
 }
+.icon{
+    width:40px;
+    height: 40px;
+}

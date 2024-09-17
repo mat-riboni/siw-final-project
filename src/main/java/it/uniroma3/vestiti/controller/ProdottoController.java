@@ -206,7 +206,7 @@ public class ProdottoController {
 
 
 	public void aggiornaProdotto(Prodotto prodotto, Prodotto modificato, int quantitaXS, int quantitaS, int quantitaM, int quantitaL, int quantitaXL, MultipartFile file) {
-		if (!modificato.getNome().isEmpty() && !modificato.getNome().isBlank()) {
+		if (!modificato.getNome().isEmpty() && !modificato.getNome().isBlank() && modificato.getNome() != null) {
 			prodotto.setNome(modificato.getNome());
 		}
 

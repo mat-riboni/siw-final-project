@@ -38,7 +38,7 @@ public class SiwProgettoFinaleApplication implements CommandLineRunner{
 		normale.setNome("utente");
 		normale.setCognome("prova");
 		normale.setEmail("@mail");
-		normale.setCitta(Costanti.cittaDefault);
+		normale.setCitta("Roma");
 		Credentials credentialsUtente = new Credentials();
 		credentialsUtente.setUsername("utenteProva");
 		credentialsUtente.setPassword("12");
@@ -51,9 +51,9 @@ public class SiwProgettoFinaleApplication implements CommandLineRunner{
 		utente.setCognome("prova");
 		utente.setEmail("@mail");
 		Negozio vuoto = new Negozio();
-    	vuoto.setNome(Costanti.nomeDefault);
-    	vuoto.setCitta(Costanti.cittaDefault);
-    	vuoto.setDescrizione(Costanti.descrizioneDefault);
+    	vuoto.setNome("Fanny");
+    	vuoto.setCitta("Roma");
+    	vuoto.setDescrizione("Un fantastico negozio di abbigliamento per tutti");
     	vuoto.setIndirizzo(Costanti.indirizzoDefault);
     	vuoto.setProprietario(utente);
     	vuoto.setPrenotazioni(new ArrayList<Prenotazione>());
@@ -101,8 +101,14 @@ public class SiwProgettoFinaleApplication implements CommandLineRunner{
     			l.setQuantita(5);
     			taglie.add(l);
     			
+    			Taglia xl = new Taglia();
+    			xl.setTaglia("XL");
+    			xl.setQuantita(23);
+    			taglie.add(xl);
+    			
     			prod.setTaglie(taglie);
     			prodotti.add(prod);
+    			
     		}
     		vuoto.setProdotti(prodotti);
     		p.setProdotti(prodotti);

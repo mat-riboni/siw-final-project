@@ -228,7 +228,6 @@ textarea{
 	color: rgb(183, 0, 0);
 	font-size: small;
 }
-/* Nasconde la scrollbar su Firefox */
 .uk-switcher .list-group {
     scrollbar-width: none;
 }

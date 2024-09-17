@@ -7,11 +7,9 @@ async function fetchMese2prenotazione() {
     try {
         const response = await fetch('/negozio/' + negozioId + '/prenotazioni');
         
-        // Logga la risposta come testo grezzo
         const responseText = await response.text();
         console.log("Raw response:", responseText);
 
-        // Tenta di fare il parsing del JSON
         const mese2prenotazione = JSON.parse(responseText);
         
         return mese2prenotazione;
@@ -24,7 +22,6 @@ async function fetchMese2prenotazione() {
 async function createChart() {
     const mese2prenotazioni = await fetchMese2prenotazione();
 
-    // Prepara i dati per Chart.js
     const labels = Object.keys(mese2prenotazioni);
     
     const data = Object.values(mese2prenotazioni);
@@ -33,7 +30,7 @@ async function createChart() {
 
     const ctx = document.getElementById('salesChart').getContext('2d');
     const chart = new Chart(ctx, {
-        type: 'bar', // Tipo di grafico
+        type: 'bar', 
         data: {
             labels: labels,
             datasets: [{

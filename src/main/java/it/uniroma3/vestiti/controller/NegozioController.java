@@ -5,6 +5,8 @@ import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.io.Resource;
+import org.springframework.core.io.ResourceLoader;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -29,6 +31,9 @@ public class NegozioController {
 	
 	@Autowired
 	NegozioService negozioService;
+	
+	@Autowired
+	ResourceLoader resourceLoader;
 		
 		@PostMapping("/cercaNegozi")
 		public String getNegoziCercati(Model model,
@@ -41,27 +46,25 @@ public class NegozioController {
 		
 		@PostMapping("/negoziante/modificaNegozio")
 		public String modificaNegozio(
-		    @Valid @ModelAttribute("negozioNuovo") Negozio nuovo,
-		    BindingResult bindingResult,
+		    @ModelAttribute("negozioNuovo") Negozio nuovo,
 		    @RequestParam("immagineNuova") MultipartFile file, 
 		    @RequestParam("id") Long id) {
 			
-			if(bindingResult.hasErrors()) {
-				return "indexNegoziante.html";
-			}
+			System.out.println(nuovo.getNome());
+			
 
 		    Optional<Negozio> optionalNegozio = this.negozioService.findById(id);
 
 		    if (optionalNegozio.isPresent()) {
 		        Negozio vecchio = optionalNegozio.get();
 
-		        if (nuovo.getCitta() != null && !nuovo.getCitta().trim().isEmpty()) {
+		        if (nuovo.getCitta() != null && !nuovo.getCitta().isEmpty()) {
 		            vecchio.setCitta(nuovo.getCitta());
 		        }
 		        if (nuovo.getDescrizione() != null && !nuovo.getDescrizione().trim().isEmpty()) {
 		            vecchio.setDescrizione(nuovo.getDescrizione());
 		        }
-		        if (nuovo.getNome() != null && !nuovo.getNome().trim().isEmpty()) {
+		        if (nuovo.getNome() != null && !nuovo.getNome().isEmpty()) {
 		            vecchio.setNome(nuovo.getNome());
 		        }
 		        if (nuovo.getIndirizzo() != null && !nuovo.getIndirizzo().trim().isEmpty()) {
@@ -78,7 +81,6 @@ public class NegozioController {
 		                System.out.println("Immagine non caricata causa controller");
 		            }
 		        }
-
 		        this.negozioService.save(vecchio);
 		    }
 
@@ -102,6 +104,16 @@ public class NegozioController {
 		            headers.setContentType(MediaType.parseMediaType(MIMEType));
 		            return new ResponseEntity<>(immagine, headers, HttpStatus.OK);
 					
+				} else {
+					try {
+						Resource resource = resourceLoader.getResource("classpath:static/images/copertina_default.jpg");
+						byte[] bytes = resource.getInputStream().readAllBytes();
+						HttpHeaders headers = new HttpHeaders();
+						headers.setContentType(MediaType.IMAGE_JPEG);
+						return new ResponseEntity<>(bytes, headers, HttpStatus.OK);
+					} catch (IOException e) {
+						return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+					}
 				}
 				
 			} 
